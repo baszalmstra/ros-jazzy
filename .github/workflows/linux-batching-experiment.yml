@@ -1,0 +1,4515 @@
+jobs:
+  stage_0_job_0:
+    name: ros2-ament-package ros2-ament-cmake-core ros2-ros-environment ros2-ros-workspace
+      ros2-ament-cmake-export-definitions ros2-magic-enum ros2-ruckig ros2-test-interface-files
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs: []
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-ament-package ros2-ament-cmake-core ros2-ros-environment ros2-ros-workspace
+        ros2-ament-cmake-export-definitions ros2-magic-enum ros2-ruckig ros2-test-interface-files
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-ament-package ros2-ament-cmake-core ros2-ros-environment
+          ros2-ros-workspace ros2-ament-cmake-export-definitions ros2-magic-enum ros2-ruckig
+          ros2-test-interface-files
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_1_job_1:
+    name: ros2-ament-cmake-export-libraries ros2-ament-cmake-export-interfaces ros2-ament-cmake-export-link-flags
+      ros2-ament-cmake-export-targets
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_0_job_0
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-ament-cmake-export-libraries ros2-ament-cmake-export-interfaces
+        ros2-ament-cmake-export-link-flags ros2-ament-cmake-export-targets
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-ament-cmake-export-libraries ros2-ament-cmake-export-interfaces
+          ros2-ament-cmake-export-link-flags ros2-ament-cmake-export-targets
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_2_job_2:
+    name: ros2-ament-cmake-include-directories ros2-ament-cmake-libraries ros2-ament-cmake-export-dependencies
+      ros2-ament-cmake-target-dependencies
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_0_job_0
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-ament-cmake-include-directories ros2-ament-cmake-libraries
+        ros2-ament-cmake-export-dependencies ros2-ament-cmake-target-dependencies
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-ament-cmake-include-directories ros2-ament-cmake-libraries
+          ros2-ament-cmake-export-dependencies ros2-ament-cmake-target-dependencies
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_3_job_3:
+    name: ros2-ament-lint ros2-ament-flake8 ros2-ament-mypy ros2-ament-pep257 ros2-ament-copyright
+      ros2-ament-lint-cmake ros2-lbr-moveit ros2-osrf-testing-tools-cpp
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_0_job_0
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-ament-lint ros2-ament-flake8 ros2-ament-mypy ros2-ament-pep257
+        ros2-ament-copyright ros2-ament-lint-cmake ros2-lbr-moveit ros2-osrf-testing-tools-cpp
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-ament-lint ros2-ament-flake8 ros2-ament-mypy ros2-ament-pep257
+          ros2-ament-copyright ros2-ament-lint-cmake ros2-lbr-moveit ros2-osrf-testing-tools-cpp
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_4_job_4:
+    name: ros2-ament-cmake-python ros2-ament-cmake-test ros2-ament-cmake-lint-cmake
+      ros2-ament-cmake-copyright ros2-ament-cmake-flake8 ros2-ament-cmake-pep257 ros2-ament-cpplint
+      ros2-ament-cmake-cpplint ros2-ament-pycodestyle ros2-ament-cppcheck ros2-ament-cmake-cppcheck
+      ros2-gtest-vendor ros2-ament-cmake-gtest ros2-ament-cmake-gen-version-h ros2-gmock-vendor
+      ros2-osrf-pycommon
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_3_job_3
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-ament-cmake-python ros2-ament-cmake-test ros2-ament-cmake-lint-cmake
+        ros2-ament-cmake-copyright ros2-ament-cmake-flake8 ros2-ament-cmake-pep257
+        ros2-ament-cpplint ros2-ament-cmake-cpplint ros2-ament-pycodestyle ros2-ament-cppcheck
+        ros2-ament-cmake-cppcheck ros2-gtest-vendor ros2-ament-cmake-gtest ros2-ament-cmake-gen-version-h
+        ros2-gmock-vendor ros2-osrf-pycommon
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-ament-cmake-python ros2-ament-cmake-test ros2-ament-cmake-lint-cmake
+          ros2-ament-cmake-copyright ros2-ament-cmake-flake8 ros2-ament-cmake-pep257
+          ros2-ament-cpplint ros2-ament-cmake-cpplint ros2-ament-pycodestyle ros2-ament-cppcheck
+          ros2-ament-cmake-cppcheck ros2-gtest-vendor ros2-ament-cmake-gtest ros2-ament-cmake-gen-version-h
+          ros2-gmock-vendor ros2-osrf-pycommon
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_5_job_5:
+    name: ros2-ament-index-python ros2-launch ros2-launch-xml ros2-launch-yaml ros2-launch-testing
+      ros2-launch-pytest ros2-robot-upstart
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_4_job_4
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-ament-index-python ros2-launch ros2-launch-xml ros2-launch-yaml
+        ros2-launch-testing ros2-launch-pytest ros2-robot-upstart
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-ament-index-python ros2-launch ros2-launch-xml ros2-launch-yaml
+          ros2-launch-testing ros2-launch-pytest ros2-robot-upstart
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_6_job_6:
+    name: ros2-ament-xmllint ros2-ament-black ros2-ament-cmake-xmllint ros2-ament-cmake-black
+      ros2-domain-coordinator ros2-foonathan-memory-vendor ros2-rosidl-cli ros2-rpyutils
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_4_job_4
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-ament-xmllint ros2-ament-black ros2-ament-cmake-xmllint ros2-ament-cmake-black
+        ros2-domain-coordinator ros2-foonathan-memory-vendor ros2-rosidl-cli ros2-rpyutils
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-ament-xmllint ros2-ament-black ros2-ament-cmake-xmllint
+          ros2-ament-cmake-black ros2-domain-coordinator ros2-foonathan-memory-vendor
+          ros2-rosidl-cli ros2-rpyutils
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_7_job_7:
+    name: ros2-ament-cmake-export-include-directories ros2-ament-cmake-version ros2-ament-cmake
+      ros2-fastcdr ros2-fastrtps ros2-swri-serial-util ros2-ur-client-library
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_1_job_1
+    - stage_2_job_2
+    - stage_6_job_6
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-ament-cmake-export-include-directories ros2-ament-cmake-version
+        ros2-ament-cmake ros2-fastcdr ros2-fastrtps ros2-swri-serial-util ros2-ur-client-library
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-ament-cmake-export-include-directories ros2-ament-cmake-version
+          ros2-ament-cmake ros2-fastcdr ros2-fastrtps ros2-swri-serial-util ros2-ur-client-library
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_8_job_8:
+    name: ros2-ament-cmake-vendor-package ros2-ament-lint-auto ros2-gz-cmake-vendor
+      ros2-gz-dartsim-vendor ros2-gz-ogre-next-vendor ros2-gz-tools-vendor ros2-gz-utils-vendor
+      ros2-gz-math-vendor ros2-gz-common-vendor ros2-gz-msgs-vendor ros2-gz-fuel-tools-vendor
+      ros2-gz-transport-vendor ros2-mujoco-vendor ros2-uncrustify-vendor ros2-ament-uncrustify
+      ros2-ament-cmake-uncrustify ros2-ament-lint-common ros2-asio-cmake-module ros2-fastrtps-cmake-module
+      ros2-python-cmake-module
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_7_job_7
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-ament-cmake-vendor-package ros2-ament-lint-auto ros2-gz-cmake-vendor
+        ros2-gz-dartsim-vendor ros2-gz-ogre-next-vendor ros2-gz-tools-vendor ros2-gz-utils-vendor
+        ros2-gz-math-vendor ros2-gz-common-vendor ros2-gz-msgs-vendor ros2-gz-fuel-tools-vendor
+        ros2-gz-transport-vendor ros2-mujoco-vendor ros2-uncrustify-vendor ros2-ament-uncrustify
+        ros2-ament-cmake-uncrustify ros2-ament-lint-common ros2-asio-cmake-module
+        ros2-fastrtps-cmake-module ros2-python-cmake-module
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-ament-cmake-vendor-package ros2-ament-lint-auto ros2-gz-cmake-vendor
+          ros2-gz-dartsim-vendor ros2-gz-ogre-next-vendor ros2-gz-tools-vendor ros2-gz-utils-vendor
+          ros2-gz-math-vendor ros2-gz-common-vendor ros2-gz-msgs-vendor ros2-gz-fuel-tools-vendor
+          ros2-gz-transport-vendor ros2-mujoco-vendor ros2-uncrustify-vendor ros2-ament-uncrustify
+          ros2-ament-cmake-uncrustify ros2-ament-lint-common ros2-asio-cmake-module
+          ros2-fastrtps-cmake-module ros2-python-cmake-module
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_9_job_9:
+    name: ros2-ament-cmake-gmock ros2-ament-cmake-auto ros2-ament-cmake-pytest ros2-ament-cmake-ros
+      ros2-angles ros2-keyboard-handler ros2-rosidl-adapter ros2-rosidl-parser ros2-rosidl-generator-type-description
+      ros2-rosidl-pycommon ros2-rosidl-cmake ros2-rosidl-generator-dds-idl ros2-tracetools
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_5_job_5
+    - stage_8_job_8
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-ament-cmake-gmock ros2-ament-cmake-auto ros2-ament-cmake-pytest
+        ros2-ament-cmake-ros ros2-angles ros2-keyboard-handler ros2-rosidl-adapter
+        ros2-rosidl-parser ros2-rosidl-generator-type-description ros2-rosidl-pycommon
+        ros2-rosidl-cmake ros2-rosidl-generator-dds-idl ros2-tracetools
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-ament-cmake-gmock ros2-ament-cmake-auto ros2-ament-cmake-pytest
+          ros2-ament-cmake-ros ros2-angles ros2-keyboard-handler ros2-rosidl-adapter
+          ros2-rosidl-parser ros2-rosidl-generator-type-description ros2-rosidl-pycommon
+          ros2-rosidl-cmake ros2-rosidl-generator-dds-idl ros2-tracetools
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_10_job_10:
+    name: ros2-ament-index-cpp ros2-google-benchmark-vendor ros2-ament-cmake-google-benchmark
+      ros2-launch-testing-ament-cmake ros2-performance-test-fixture ros2-libyaml-vendor
+      ros2-rcutils ros2-rcpputils ros2-rosidl-typesupport-interface ros2-rosidl-runtime-c
+      ros2-rosidl-runtime-cpp
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_9_job_9
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-ament-index-cpp ros2-google-benchmark-vendor ros2-ament-cmake-google-benchmark
+        ros2-launch-testing-ament-cmake ros2-performance-test-fixture ros2-libyaml-vendor
+        ros2-rcutils ros2-rcpputils ros2-rosidl-typesupport-interface ros2-rosidl-runtime-c
+        ros2-rosidl-runtime-cpp
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-ament-index-cpp ros2-google-benchmark-vendor ros2-ament-cmake-google-benchmark
+          ros2-launch-testing-ament-cmake ros2-performance-test-fixture ros2-libyaml-vendor
+          ros2-rcutils ros2-rcpputils ros2-rosidl-typesupport-interface ros2-rosidl-runtime-c
+          ros2-rosidl-runtime-cpp
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_11_job_11:
+    name: ros2-console-bridge-vendor ros2-class-loader ros2-eigen3-cmake-module ros2-libcurl-vendor
+      ros2-orocos-kdl-vendor ros2-resource-retriever ros2-rti-connext-dds-cmake-module
+      ros2-rviz-assimp-vendor ros2-rviz-ogre-vendor ros2-rviz-rendering ros2-rviz-rendering-tests
+      ros2-tinyxml2-vendor ros2-pluginlib
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_10_job_10
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-console-bridge-vendor ros2-class-loader ros2-eigen3-cmake-module
+        ros2-libcurl-vendor ros2-orocos-kdl-vendor ros2-resource-retriever ros2-rti-connext-dds-cmake-module
+        ros2-rviz-assimp-vendor ros2-rviz-ogre-vendor ros2-rviz-rendering ros2-rviz-rendering-tests
+        ros2-tinyxml2-vendor ros2-pluginlib
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-console-bridge-vendor ros2-class-loader ros2-eigen3-cmake-module
+          ros2-libcurl-vendor ros2-orocos-kdl-vendor ros2-resource-retriever ros2-rti-connext-dds-cmake-module
+          ros2-rviz-assimp-vendor ros2-rviz-ogre-vendor ros2-rviz-rendering ros2-rviz-rendering-tests
+          ros2-tinyxml2-vendor ros2-pluginlib
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_12_job_12:
+    name: ros2-gtsam
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_0_job_0
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-gtsam
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-gtsam
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_13_job_13:
+    name: ros2-libg2o
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_7_job_7
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-libg2o
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-libg2o
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_14_job_14:
+    name: ros2-mimick-vendor
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_8_job_8
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-mimick-vendor
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-mimick-vendor
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_15_job_15:
+    name: ros2-mrt-cmake-modules ros2-lanelet2-core ros2-lanelet2-io ros2-lanelet2-maps
+      ros2-lanelet2-projection ros2-lanelet2-traffic-rules ros2-lanelet2-matching
+      ros2-lanelet2-routing ros2-lanelet2-python ros2-lanelet2-validation
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_4_job_4
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-mrt-cmake-modules ros2-lanelet2-core ros2-lanelet2-io ros2-lanelet2-maps
+        ros2-lanelet2-projection ros2-lanelet2-traffic-rules ros2-lanelet2-matching
+        ros2-lanelet2-routing ros2-lanelet2-python ros2-lanelet2-validation
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-mrt-cmake-modules ros2-lanelet2-core ros2-lanelet2-io
+          ros2-lanelet2-maps ros2-lanelet2-projection ros2-lanelet2-traffic-rules
+          ros2-lanelet2-matching ros2-lanelet2-routing ros2-lanelet2-python ros2-lanelet2-validation
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_16_job_16:
+    name: ros2-orbbec-description
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_8_job_8
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-orbbec-description
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-orbbec-description
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_17_job_17:
+    name: ros2-rcl-logging-interface ros2-rosidl-dynamic-typesupport ros2-rmw ros2-rcl-yaml-param-parser
+      ros2-rosidl-generator-c ros2-rosidl-generator-cpp ros2-rosidl-typesupport-fastrtps-cpp
+      ros2-rosidl-typesupport-fastrtps-c ros2-rosidl-typesupport-introspection-c ros2-rosidl-typesupport-c
+      ros2-rosidl-generator-py ros2-rosidl-generator-rs ros2-rosidl-typesupport-introspection-cpp
+      ros2-rosidl-typesupport-cpp ros2-rosidl-core-generators ros2-rosidl-core-runtime
+      ros2-builtin-interfaces ros2-service-msgs ros2-type-description-interfaces ros2-unique-identifier-msgs
+      ros2-action-msgs ros2-rosidl-default-generators ros2-rosidl-default-runtime
+      ros2-statistics-msgs ros2-test-msgs
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_10_job_10
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-rcl-logging-interface ros2-rosidl-dynamic-typesupport ros2-rmw
+        ros2-rcl-yaml-param-parser ros2-rosidl-generator-c ros2-rosidl-generator-cpp
+        ros2-rosidl-typesupport-fastrtps-cpp ros2-rosidl-typesupport-fastrtps-c ros2-rosidl-typesupport-introspection-c
+        ros2-rosidl-typesupport-c ros2-rosidl-generator-py ros2-rosidl-generator-rs
+        ros2-rosidl-typesupport-introspection-cpp ros2-rosidl-typesupport-cpp ros2-rosidl-core-generators
+        ros2-rosidl-core-runtime ros2-builtin-interfaces ros2-service-msgs ros2-type-description-interfaces
+        ros2-unique-identifier-msgs ros2-action-msgs ros2-rosidl-default-generators
+        ros2-rosidl-default-runtime ros2-statistics-msgs ros2-test-msgs
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-rcl-logging-interface ros2-rosidl-dynamic-typesupport
+          ros2-rmw ros2-rcl-yaml-param-parser ros2-rosidl-generator-c ros2-rosidl-generator-cpp
+          ros2-rosidl-typesupport-fastrtps-cpp ros2-rosidl-typesupport-fastrtps-c
+          ros2-rosidl-typesupport-introspection-c ros2-rosidl-typesupport-c ros2-rosidl-generator-py
+          ros2-rosidl-generator-rs ros2-rosidl-typesupport-introspection-cpp ros2-rosidl-typesupport-cpp
+          ros2-rosidl-core-generators ros2-rosidl-core-runtime ros2-builtin-interfaces
+          ros2-service-msgs ros2-type-description-interfaces ros2-unique-identifier-msgs
+          ros2-action-msgs ros2-rosidl-default-generators ros2-rosidl-default-runtime
+          ros2-statistics-msgs ros2-test-msgs
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_18_job_18:
+    name: ros2-autoware-control-msgs
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_17_job_17
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-autoware-control-msgs
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-autoware-control-msgs
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_19_job_19:
+    name: ros2-iceoryx-hoofs ros2-iceoryx-posh ros2-iceoryx-binding-c ros2-cyclonedds
+      ros2-rmw-dds-common ros2-rmw-connextdds-common ros2-rmw-connextdds ros2-rmw-cyclonedds-cpp
+      ros2-rmw-fastrtps-shared-cpp ros2-rmw-fastrtps-dynamic-cpp ros2-rosidl-dynamic-typesupport-fastrtps
+      ros2-rmw-fastrtps-cpp ros2-simple-term-menu-vendor ros2-turtlebot4-setup
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_11_job_11
+    - stage_17_job_17
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-iceoryx-hoofs ros2-iceoryx-posh ros2-iceoryx-binding-c ros2-cyclonedds
+        ros2-rmw-dds-common ros2-rmw-connextdds-common ros2-rmw-connextdds ros2-rmw-cyclonedds-cpp
+        ros2-rmw-fastrtps-shared-cpp ros2-rmw-fastrtps-dynamic-cpp ros2-rosidl-dynamic-typesupport-fastrtps
+        ros2-rmw-fastrtps-cpp ros2-simple-term-menu-vendor ros2-turtlebot4-setup
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-iceoryx-hoofs ros2-iceoryx-posh ros2-iceoryx-binding-c
+          ros2-cyclonedds ros2-rmw-dds-common ros2-rmw-connextdds-common ros2-rmw-connextdds
+          ros2-rmw-cyclonedds-cpp ros2-rmw-fastrtps-shared-cpp ros2-rmw-fastrtps-dynamic-cpp
+          ros2-rosidl-dynamic-typesupport-fastrtps ros2-rmw-fastrtps-cpp ros2-simple-term-menu-vendor
+          ros2-turtlebot4-setup
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_20_job_20:
+    name: ros2-rcl-interfaces ros2-composition-interfaces ros2-rosgraph-msgs ros2-std-msgs
+      ros2-ackermann-msgs ros2-ffmpeg-image-transport-msgs ros2-geometry-msgs ros2-autoware-v2x-msgs
+      ros2-geographic-msgs ros2-polygon-msgs ros2-sensor-msgs ros2-autoware-map-msgs
+      ros2-autoware-sensing-msgs ros2-geodesy ros2-mavros-msgs
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_17_job_17
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-rcl-interfaces ros2-composition-interfaces ros2-rosgraph-msgs
+        ros2-std-msgs ros2-ackermann-msgs ros2-ffmpeg-image-transport-msgs ros2-geometry-msgs
+        ros2-autoware-v2x-msgs ros2-geographic-msgs ros2-polygon-msgs ros2-sensor-msgs
+        ros2-autoware-map-msgs ros2-autoware-sensing-msgs ros2-geodesy ros2-mavros-msgs
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-rcl-interfaces ros2-composition-interfaces ros2-rosgraph-msgs
+          ros2-std-msgs ros2-ackermann-msgs ros2-ffmpeg-image-transport-msgs ros2-geometry-msgs
+          ros2-autoware-v2x-msgs ros2-geographic-msgs ros2-polygon-msgs ros2-sensor-msgs
+          ros2-autoware-map-msgs ros2-autoware-sensing-msgs ros2-geodesy ros2-mavros-msgs
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_21_job_21:
+    name: ros2-lifecycle-msgs ros2-rmw-implementation-cmake ros2-rmw-implementation
+      ros2-spdlog-vendor ros2-rcl-logging-spdlog ros2-rcl ros2-rcl-action ros2-rcl-lifecycle
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_19_job_19
+    - stage_20_job_20
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-lifecycle-msgs ros2-rmw-implementation-cmake ros2-rmw-implementation
+        ros2-spdlog-vendor ros2-rcl-logging-spdlog ros2-rcl ros2-rcl-action ros2-rcl-lifecycle
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-lifecycle-msgs ros2-rmw-implementation-cmake ros2-rmw-implementation
+          ros2-spdlog-vendor ros2-rcl-logging-spdlog ros2-rcl ros2-rcl-action ros2-rcl-lifecycle
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_22_job_22:
+    name: ros2-libstatistics-collector ros2-negotiated-interfaces ros2-rclcpp ros2-mocap4r2-msgs
+      ros2-negotiated ros2-rclcpp-lifecycle ros2-plansys2-lifecycle-manager ros2-vision-msgs
+      ros2-depthai-ros-msgs
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_21_job_21
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-libstatistics-collector ros2-negotiated-interfaces ros2-rclcpp
+        ros2-mocap4r2-msgs ros2-negotiated ros2-rclcpp-lifecycle ros2-plansys2-lifecycle-manager
+        ros2-vision-msgs ros2-depthai-ros-msgs
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-libstatistics-collector ros2-negotiated-interfaces ros2-rclcpp
+          ros2-mocap4r2-msgs ros2-negotiated ros2-rclcpp-lifecycle ros2-plansys2-lifecycle-manager
+          ros2-vision-msgs ros2-depthai-ros-msgs
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_23_job_23:
+    name: ros2-cv-bridge ros2-filters ros2-grid-map-cmake-helpers ros2-grid-map-core
+      ros2-grid-map-cv ros2-grid-map-msgs ros2-grid-map-sdf
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_22_job_22
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-cv-bridge ros2-filters ros2-grid-map-cmake-helpers ros2-grid-map-core
+        ros2-grid-map-cv ros2-grid-map-msgs ros2-grid-map-sdf
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-cv-bridge ros2-filters ros2-grid-map-cmake-helpers ros2-grid-map-core
+          ros2-grid-map-cv ros2-grid-map-msgs ros2-grid-map-sdf
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_24_job_24:
+    name: ros2-gz-plugin-vendor ros2-gz-rendering-vendor ros2-gz-gui-vendor ros2-jrl-cmakemodules
+      ros2-eigenpy ros2-coal ros2-urdfdom-headers ros2-urdf-parser-plugin ros2-urdfdom
+      ros2-pinocchio ros2-sdformat-vendor ros2-gz-physics-vendor ros2-gz-sensors-vendor
+      ros2-gz-sim-vendor ros2-urdf ros2-kdl-parser ros2-trac-ik-lib
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_22_job_22
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-gz-plugin-vendor ros2-gz-rendering-vendor ros2-gz-gui-vendor
+        ros2-jrl-cmakemodules ros2-eigenpy ros2-coal ros2-urdfdom-headers ros2-urdf-parser-plugin
+        ros2-urdfdom ros2-pinocchio ros2-sdformat-vendor ros2-gz-physics-vendor ros2-gz-sensors-vendor
+        ros2-gz-sim-vendor ros2-urdf ros2-kdl-parser ros2-trac-ik-lib
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-gz-plugin-vendor ros2-gz-rendering-vendor ros2-gz-gui-vendor
+          ros2-jrl-cmakemodules ros2-eigenpy ros2-coal ros2-urdfdom-headers ros2-urdf-parser-plugin
+          ros2-urdfdom ros2-pinocchio ros2-sdformat-vendor ros2-gz-physics-vendor
+          ros2-gz-sensors-vendor ros2-gz-sim-vendor ros2-urdf ros2-kdl-parser ros2-trac-ik-lib
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_25_job_25:
+    name: ros2-axis-description ros2-xacro ros2-microstrain-inertial-description ros2-moveit-resources-prbt-support
+      ros2-turtlebot3-description
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_24_job_24
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-axis-description ros2-xacro ros2-microstrain-inertial-description
+        ros2-moveit-resources-prbt-support ros2-turtlebot3-description
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-axis-description ros2-xacro ros2-microstrain-inertial-description
+          ros2-moveit-resources-prbt-support ros2-turtlebot3-description
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_26_job_26:
+    name: ros2-pybind11-vendor ros2-rclpy ros2-mouse-teleop ros2-ros2cli ros2-lanelet2-examples
+      ros2-lanelet2
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_15_job_15
+    - stage_21_job_21
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-pybind11-vendor ros2-rclpy ros2-mouse-teleop ros2-ros2cli ros2-lanelet2-examples
+        ros2-lanelet2
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-pybind11-vendor ros2-rclpy ros2-mouse-teleop ros2-ros2cli
+          ros2-lanelet2-examples ros2-lanelet2
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_27_job_27:
+    name: ros2-autoware-lint-common ros2-autoware-cmake ros2-autoware-utils-math ros2-launch-ros
+      ros2-launch-testing-ros ros2-nav-2d-msgs ros2-nav-msgs ros2-dwb-msgs ros2-easynav-interfaces
+      ros2-nav2-common ros2-nav2-msgs ros2-nav2-simple-commander ros2-nav2-voxel-grid
+      ros2-rclcpp-components ros2-logging-demo ros2-autoware-utils-logging ros2-spacenav
+      ros2-velodyne-laserscan
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_22_job_22
+    - stage_26_job_26
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-autoware-lint-common ros2-autoware-cmake ros2-autoware-utils-math
+        ros2-launch-ros ros2-launch-testing-ros ros2-nav-2d-msgs ros2-nav-msgs ros2-dwb-msgs
+        ros2-easynav-interfaces ros2-nav2-common ros2-nav2-msgs ros2-nav2-simple-commander
+        ros2-nav2-voxel-grid ros2-rclcpp-components ros2-logging-demo ros2-autoware-utils-logging
+        ros2-spacenav ros2-velodyne-laserscan
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-autoware-lint-common ros2-autoware-cmake ros2-autoware-utils-math
+          ros2-launch-ros ros2-launch-testing-ros ros2-nav-2d-msgs ros2-nav-msgs ros2-dwb-msgs
+          ros2-easynav-interfaces ros2-nav2-common ros2-nav2-msgs ros2-nav2-simple-commander
+          ros2-nav2-voxel-grid ros2-rclcpp-components ros2-logging-demo ros2-autoware-utils-logging
+          ros2-spacenav ros2-velodyne-laserscan
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_28_job_28:
+    name: ros2-action-tutorials-interfaces ros2-action-tutorials-py ros2-ament-clang-tidy
+      ros2-ament-cmake-clang-tidy ros2-examples-rclcpp-minimal-subscriber ros2-rclcpp-action
+      ros2-action-tutorials-cpp ros2-ros2-control-cmake ros2-realtime-tools ros2-rtest
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_27_job_27
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-action-tutorials-interfaces ros2-action-tutorials-py ros2-ament-clang-tidy
+        ros2-ament-cmake-clang-tidy ros2-examples-rclcpp-minimal-subscriber ros2-rclcpp-action
+        ros2-action-tutorials-cpp ros2-ros2-control-cmake ros2-realtime-tools ros2-rtest
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-action-tutorials-interfaces ros2-action-tutorials-py
+          ros2-ament-clang-tidy ros2-ament-cmake-clang-tidy ros2-examples-rclcpp-minimal-subscriber
+          ros2-rclcpp-action ros2-action-tutorials-cpp ros2-ros2-control-cmake ros2-realtime-tools
+          ros2-rtest
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_29_job_29:
+    name: ros2-autoware-common-msgs ros2-autoware-internal-localization-msgs ros2-autoware-localization-msgs
+      ros2-autoware-perception-msgs ros2-autoware-planning-msgs ros2-autoware-vehicle-msgs
+      ros2-autoware-internal-planning-msgs ros2-diagnostic-msgs ros2-autoware-system-msgs
+      ros2-ros2-medkit-msgs
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_27_job_27
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-autoware-common-msgs ros2-autoware-internal-localization-msgs
+        ros2-autoware-localization-msgs ros2-autoware-perception-msgs ros2-autoware-planning-msgs
+        ros2-autoware-vehicle-msgs ros2-autoware-internal-planning-msgs ros2-diagnostic-msgs
+        ros2-autoware-system-msgs ros2-ros2-medkit-msgs
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-autoware-common-msgs ros2-autoware-internal-localization-msgs
+          ros2-autoware-localization-msgs ros2-autoware-perception-msgs ros2-autoware-planning-msgs
+          ros2-autoware-vehicle-msgs ros2-autoware-internal-planning-msgs ros2-diagnostic-msgs
+          ros2-autoware-system-msgs ros2-ros2-medkit-msgs
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_30_job_30:
+    name: ros2-backward-ros ros2-moveit-common ros2-ros2-fmt-logger ros2-trajectory-msgs
+      ros2-control-msgs ros2-ros2-controllers-test-nodes ros2-ur-msgs
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_27_job_27
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-backward-ros ros2-moveit-common ros2-ros2-fmt-logger ros2-trajectory-msgs
+        ros2-control-msgs ros2-ros2-controllers-test-nodes ros2-ur-msgs
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-backward-ros ros2-moveit-common ros2-ros2-fmt-logger
+          ros2-trajectory-msgs ros2-control-msgs ros2-ros2-controllers-test-nodes
+          ros2-ur-msgs
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_31_job_31:
+    name: ros2-diagnostic-updater ros2-clearpath-bt-joy ros2-pal-statistics-msgs ros2-pal-statistics
+      ros2-self-test
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_29_job_29
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-diagnostic-updater ros2-clearpath-bt-joy ros2-pal-statistics-msgs
+        ros2-pal-statistics ros2-self-test
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-diagnostic-updater ros2-clearpath-bt-joy ros2-pal-statistics-msgs
+          ros2-pal-statistics ros2-self-test
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_32_job_32:
+    name: ros2-controller-manager-msgs ros2-generate-parameter-library-py ros2-ros2-control-test-assets
+      ros2-sdformat-test-files ros2-sdformat-urdf ros2-tcb-span ros2-rsl ros2-tl-expected
+      ros2-parameter-traits ros2-generate-parameter-library ros2-joint-limits ros2-hardware-interface
+      ros2-controller-interface ros2-hardware-interface-testing
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_24_job_24
+    - stage_28_job_28
+    - stage_30_job_30
+    - stage_31_job_31
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-controller-manager-msgs ros2-generate-parameter-library-py
+        ros2-ros2-control-test-assets ros2-sdformat-test-files ros2-sdformat-urdf
+        ros2-tcb-span ros2-rsl ros2-tl-expected ros2-parameter-traits ros2-generate-parameter-library
+        ros2-joint-limits ros2-hardware-interface ros2-controller-interface ros2-hardware-interface-testing
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-controller-manager-msgs ros2-generate-parameter-library-py
+          ros2-ros2-control-test-assets ros2-sdformat-test-files ros2-sdformat-urdf
+          ros2-tcb-span ros2-rsl ros2-tl-expected ros2-parameter-traits ros2-generate-parameter-library
+          ros2-joint-limits ros2-hardware-interface ros2-controller-interface ros2-hardware-interface-testing
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_33_job_33:
+    name: ros2-async-web-server-cpp ros2-image-geometry ros2-message-filters ros2-image-transport
+      ros2-std-srvs ros2-camera-calibration ros2-robotiq-controllers ros2-vision-opencv
+      ros2-web-video-server ros2-zstd-image-transport
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_23_job_23
+    - stage_32_job_32
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-async-web-server-cpp ros2-image-geometry ros2-message-filters
+        ros2-image-transport ros2-std-srvs ros2-camera-calibration ros2-robotiq-controllers
+        ros2-vision-opencv ros2-web-video-server ros2-zstd-image-transport
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-async-web-server-cpp ros2-image-geometry ros2-message-filters
+          ros2-image-transport ros2-std-srvs ros2-camera-calibration ros2-robotiq-controllers
+          ros2-vision-opencv ros2-web-video-server ros2-zstd-image-transport
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_34_job_34:
+    name: ros2-diagnostic-aggregator ros2-diagnostic-common-diagnostics ros2-diagnostic-remote-logging
+      ros2-diagnostics ros2-irobot-create-msgs ros2-create3-republisher ros2-rosgraph-monitor-msgs
+      ros2-rmw-stats-shim ros2-rosgraph-monitor ros2-turtlebot4-diagnostics ros2-turtlebot4-msgs
+      ros2-turtlebot4-node ros2-turtlebot4-base ros2-turtlebot4-tests
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_33_job_33
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-diagnostic-aggregator ros2-diagnostic-common-diagnostics ros2-diagnostic-remote-logging
+        ros2-diagnostics ros2-irobot-create-msgs ros2-create3-republisher ros2-rosgraph-monitor-msgs
+        ros2-rmw-stats-shim ros2-rosgraph-monitor ros2-turtlebot4-diagnostics ros2-turtlebot4-msgs
+        ros2-turtlebot4-node ros2-turtlebot4-base ros2-turtlebot4-tests
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-diagnostic-aggregator ros2-diagnostic-common-diagnostics
+          ros2-diagnostic-remote-logging ros2-diagnostics ros2-irobot-create-msgs
+          ros2-create3-republisher ros2-rosgraph-monitor-msgs ros2-rmw-stats-shim
+          ros2-rosgraph-monitor ros2-turtlebot4-diagnostics ros2-turtlebot4-msgs ros2-turtlebot4-node
+          ros2-turtlebot4-base ros2-turtlebot4-tests
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_35_job_35:
+    name: ros2-lttngpy ros2-smacc2-msgs ros2-tracetools-trace ros2-tracetools-launch
+      ros2-smacc2
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_28_job_28
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-lttngpy ros2-smacc2-msgs ros2-tracetools-trace ros2-tracetools-launch
+        ros2-smacc2
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-lttngpy ros2-smacc2-msgs ros2-tracetools-trace ros2-tracetools-launch
+          ros2-smacc2
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_36_job_36:
+    name: ros2-python-qt-binding ros2-qt-dotgraph ros2-qt-gui-py-common ros2-ros2lifecycle-test-fixtures
+      ros2-ros2node ros2-rosidl-runtime-py ros2-ros2action ros2-ros2topic ros2-ros2service
+      ros2-ros2lifecycle ros2-ros2param ros2-tango-icons-vendor ros2-qt-gui ros2-rqt-gui
+      ros2-rqt-gui-py ros2-rqt-py-common ros2-rqt-console ros2-rqt-plot ros2-rqt-reconfigure
+      ros2-rqt-runtime-monitor ros2-rqt-service-caller ros2-rqt-topic
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_33_job_33
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-python-qt-binding ros2-qt-dotgraph ros2-qt-gui-py-common ros2-ros2lifecycle-test-fixtures
+        ros2-ros2node ros2-rosidl-runtime-py ros2-ros2action ros2-ros2topic ros2-ros2service
+        ros2-ros2lifecycle ros2-ros2param ros2-tango-icons-vendor ros2-qt-gui ros2-rqt-gui
+        ros2-rqt-gui-py ros2-rqt-py-common ros2-rqt-console ros2-rqt-plot ros2-rqt-reconfigure
+        ros2-rqt-runtime-monitor ros2-rqt-service-caller ros2-rqt-topic
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-python-qt-binding ros2-qt-dotgraph ros2-qt-gui-py-common
+          ros2-ros2lifecycle-test-fixtures ros2-ros2node ros2-rosidl-runtime-py ros2-ros2action
+          ros2-ros2topic ros2-ros2service ros2-ros2lifecycle ros2-ros2param ros2-tango-icons-vendor
+          ros2-qt-gui ros2-rqt-gui ros2-rqt-gui-py ros2-rqt-py-common ros2-rqt-console
+          ros2-rqt-plot ros2-rqt-reconfigure ros2-rqt-runtime-monitor ros2-rqt-service-caller
+          ros2-rqt-topic
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_37_job_37:
+    name: ros2-tf2 ros2-tf2-msgs ros2-tf2-py ros2-tf2-ros-py ros2-tf2-tools ros2-ublox-serialization
+      ros2-ublox-msgs ros2-ublox-gps ros2-ublox
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_31_job_31
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-tf2 ros2-tf2-msgs ros2-tf2-py ros2-tf2-ros-py ros2-tf2-tools
+        ros2-ublox-serialization ros2-ublox-msgs ros2-ublox-gps ros2-ublox
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-tf2 ros2-tf2-msgs ros2-tf2-py ros2-tf2-ros-py ros2-tf2-tools
+          ros2-ublox-serialization ros2-ublox-msgs ros2-ublox-gps ros2-ublox
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_38_job_38:
+    name: ros2-rqt-graph ros2-rqt-py-console ros2-rqt-shell ros2-tf2-ros ros2-rqt-tf-tree
+      ros2-tf2-eigen ros2-tf2-geometry-msgs ros2-odom-to-tf-ros2 ros2-yaets ros2-easynav-common
+      ros2-easynav-simple-common
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_36_job_36
+    - stage_37_job_37
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-rqt-graph ros2-rqt-py-console ros2-rqt-shell ros2-tf2-ros ros2-rqt-tf-tree
+        ros2-tf2-eigen ros2-tf2-geometry-msgs ros2-odom-to-tf-ros2 ros2-yaets ros2-easynav-common
+        ros2-easynav-simple-common
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-rqt-graph ros2-rqt-py-console ros2-rqt-shell ros2-tf2-ros
+          ros2-rqt-tf-tree ros2-tf2-eigen ros2-tf2-geometry-msgs ros2-odom-to-tf-ros2
+          ros2-yaets ros2-easynav-common ros2-easynav-simple-common
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_39_job_39:
+    name: ros2-actuator-msgs ros2-gps-msgs ros2-marine-acoustic-msgs ros2-nmea-msgs
+      ros2-rtcm-msgs ros2-ntrip-client ros2-sbg-driver ros2-septentrio-gnss-driver
+      ros2-tf-transformations ros2-nav2-loopback-sim ros2-nmea-navsat-driver
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_25_job_25
+    - stage_38_job_38
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-actuator-msgs ros2-gps-msgs ros2-marine-acoustic-msgs ros2-nmea-msgs
+        ros2-rtcm-msgs ros2-ntrip-client ros2-sbg-driver ros2-septentrio-gnss-driver
+        ros2-tf-transformations ros2-nav2-loopback-sim ros2-nmea-navsat-driver
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-actuator-msgs ros2-gps-msgs ros2-marine-acoustic-msgs
+          ros2-nmea-msgs ros2-rtcm-msgs ros2-ntrip-client ros2-sbg-driver ros2-septentrio-gnss-driver
+          ros2-tf-transformations ros2-nav2-loopback-sim ros2-nmea-navsat-driver
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_40_job_40:
+    name: ros2-ouster-sensor-msgs ros2-pcl-msgs ros2-pcl-conversions ros2-ouster-ros
+      ros2-pcl-ros ros2-perception-pcl ros2-slg-msgs ros2-visualization-msgs ros2-bonxai-ros
+      ros2-laser-segmentation ros2-sick-scan-xd
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_38_job_38
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-ouster-sensor-msgs ros2-pcl-msgs ros2-pcl-conversions ros2-ouster-ros
+        ros2-pcl-ros ros2-perception-pcl ros2-slg-msgs ros2-visualization-msgs ros2-bonxai-ros
+        ros2-laser-segmentation ros2-sick-scan-xd
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-ouster-sensor-msgs ros2-pcl-msgs ros2-pcl-conversions
+          ros2-ouster-ros ros2-pcl-ros ros2-perception-pcl ros2-slg-msgs ros2-visualization-msgs
+          ros2-bonxai-ros ros2-laser-segmentation ros2-sick-scan-xd
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_41_job_41:
+    name: ros2-autoware-internal-debug-msgs ros2-autoware-internal-metric-msgs ros2-autoware-internal-perception-msgs
+      ros2-autoware-internal-msgs ros2-autoware-utils-diagnostics ros2-autoware-utils-rclcpp
+      ros2-autoware-utils-system ros2-autoware-utils-debug ros2-autoware-utils-geometry
+      ros2-autoware-utils-tf ros2-autoware-utils-pcl autoware-utils-pcl ros2-autoware-utils-uuid
+      ros2-autoware-utils-visualization ros2-autoware-utils autoware-utils
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_40_job_40
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-autoware-internal-debug-msgs ros2-autoware-internal-metric-msgs
+        ros2-autoware-internal-perception-msgs ros2-autoware-internal-msgs ros2-autoware-utils-diagnostics
+        ros2-autoware-utils-rclcpp ros2-autoware-utils-system ros2-autoware-utils-debug
+        ros2-autoware-utils-geometry ros2-autoware-utils-tf ros2-autoware-utils-pcl
+        ros-jazzy-autoware-utils-pcl ros2-autoware-utils-uuid ros2-autoware-utils-visualization
+        ros2-autoware-utils ros-jazzy-autoware-utils
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-autoware-internal-debug-msgs ros2-autoware-internal-metric-msgs
+          ros2-autoware-internal-perception-msgs ros2-autoware-internal-msgs ros2-autoware-utils-diagnostics
+          ros2-autoware-utils-rclcpp ros2-autoware-utils-system ros2-autoware-utils-debug
+          ros2-autoware-utils-geometry ros2-autoware-utils-tf ros2-autoware-utils-pcl
+          ros-jazzy-autoware-utils-pcl ros2-autoware-utils-uuid ros2-autoware-utils-visualization
+          ros2-autoware-utils ros-jazzy-autoware-utils
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_42_job_42:
+    name: ros2-easynav-sensors ros2-easynav-core ros2-easynav-planner easynav-planner
+      ros2-easynav-simple-controller easynav-simple-controller ros2-easynav-simple-planner
+      easynav-simple-planner ros2-easynav-vff-controller easynav-vff-controller
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_40_job_40
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-easynav-sensors ros2-easynav-core ros2-easynav-planner ros-jazzy-easynav-planner
+        ros2-easynav-simple-controller ros-jazzy-easynav-simple-controller ros2-easynav-simple-planner
+        ros-jazzy-easynav-simple-planner ros2-easynav-vff-controller ros-jazzy-easynav-vff-controller
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-easynav-sensors ros2-easynav-core ros2-easynav-planner
+          ros-jazzy-easynav-planner ros2-easynav-simple-controller ros-jazzy-easynav-simple-controller
+          ros2-easynav-simple-planner ros-jazzy-easynav-simple-planner ros2-easynav-vff-controller
+          ros-jazzy-easynav-vff-controller
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_43_job_43:
+    name: ros2-easynav-controller easynav-controller ros2-easynav-maps-manager easynav-maps-manager
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_42_job_42
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-easynav-controller ros-jazzy-easynav-controller ros2-easynav-maps-manager
+        ros-jazzy-easynav-maps-manager
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-easynav-controller ros-jazzy-easynav-controller ros2-easynav-maps-manager
+          ros-jazzy-easynav-maps-manager
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_44_job_44:
+    name: ros2-easynav-costmap-common ros2-easynav-costmap-planner easynav-costmap-planner
+      ros2-interactive-markers ros2-easynav-routes-maps-manager easynav-routes-maps-manager
+      ros2-interactive-marker-twist-server ros2-navmap-core ros2-navmap-ros-interfaces
+      ros2-navmap-ros ros2-easynav-navmap-planner easynav-navmap-planner ros2-yaml-cpp-vendor
+      ros2-easynav-costmap-maps-manager easynav-costmap-maps-manager ros2-easynav-navmap-maps-manager
+      easynav-navmap-maps-manager
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_42_job_42
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-easynav-costmap-common ros2-easynav-costmap-planner ros-jazzy-easynav-costmap-planner
+        ros2-interactive-markers ros2-easynav-routes-maps-manager ros-jazzy-easynav-routes-maps-manager
+        ros2-interactive-marker-twist-server ros2-navmap-core ros2-navmap-ros-interfaces
+        ros2-navmap-ros ros2-easynav-navmap-planner ros-jazzy-easynav-navmap-planner
+        ros2-yaml-cpp-vendor ros2-easynav-costmap-maps-manager ros-jazzy-easynav-costmap-maps-manager
+        ros2-easynav-navmap-maps-manager ros-jazzy-easynav-navmap-maps-manager
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-easynav-costmap-common ros2-easynav-costmap-planner
+          ros-jazzy-easynav-costmap-planner ros2-interactive-markers ros2-easynav-routes-maps-manager
+          ros-jazzy-easynav-routes-maps-manager ros2-interactive-marker-twist-server
+          ros2-navmap-core ros2-navmap-ros-interfaces ros2-navmap-ros ros2-easynav-navmap-planner
+          ros-jazzy-easynav-navmap-planner ros2-yaml-cpp-vendor ros2-easynav-costmap-maps-manager
+          ros-jazzy-easynav-costmap-maps-manager ros2-easynav-navmap-maps-manager
+          ros-jazzy-easynav-navmap-maps-manager
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_45_job_45:
+    name: ros2-ament-clang-format ros2-ament-cmake-clang-format ros2-can-msgs ros2-ffmpeg-encoder-decoder
+      ros2-ffmpeg-image-transport ros2-flex-sync ros2-foxglove-msgs ros2-foxglove-compressed-video-transport
+      ros2-nobleo-socketcan-bridge ros2-ros2-medkit-cmake ros2-ros2-medkit-serialization
+      ros2-ros2-socketcan-msgs ros2-ros2-socketcan
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_44_job_44
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-ament-clang-format ros2-ament-cmake-clang-format ros2-can-msgs
+        ros2-ffmpeg-encoder-decoder ros2-ffmpeg-image-transport ros2-flex-sync ros2-foxglove-msgs
+        ros2-foxglove-compressed-video-transport ros2-nobleo-socketcan-bridge ros2-ros2-medkit-cmake
+        ros2-ros2-medkit-serialization ros2-ros2-socketcan-msgs ros2-ros2-socketcan
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-ament-clang-format ros2-ament-cmake-clang-format ros2-can-msgs
+          ros2-ffmpeg-encoder-decoder ros2-ffmpeg-image-transport ros2-flex-sync ros2-foxglove-msgs
+          ros2-foxglove-compressed-video-transport ros2-nobleo-socketcan-bridge ros2-ros2-medkit-cmake
+          ros2-ros2-medkit-serialization ros2-ros2-socketcan-msgs ros2-ros2-socketcan
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_46_job_46:
+    name: ros2-bond ros2-smclib ros2-bondcpp ros2-nav2-util ros2-nav2-amcl ros2-nav2-map-server
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_44_job_44
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-bond ros2-smclib ros2-bondcpp ros2-nav2-util ros2-nav2-amcl
+        ros2-nav2-map-server
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-bond ros2-smclib ros2-bondcpp ros2-nav2-util ros2-nav2-amcl
+          ros2-nav2-map-server
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_47_job_47:
+    name: ros2-easynav-bonxai-maps-manager easynav-bonxai-maps-manager ros2-easynav-localizer
+      easynav-localizer ros2-easynav-costmap-localizer easynav-costmap-localizer ros2-easynav-navmap-localizer
+      easynav-navmap-localizer ros2-easynav-simple-localizer easynav-simple-localizer
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_44_job_44
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-easynav-bonxai-maps-manager ros-jazzy-easynav-bonxai-maps-manager
+        ros2-easynav-localizer ros-jazzy-easynav-localizer ros2-easynav-costmap-localizer
+        ros-jazzy-easynav-costmap-localizer ros2-easynav-navmap-localizer ros-jazzy-easynav-navmap-localizer
+        ros2-easynav-simple-localizer ros-jazzy-easynav-simple-localizer
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-easynav-bonxai-maps-manager ros-jazzy-easynav-bonxai-maps-manager
+          ros2-easynav-localizer ros-jazzy-easynav-localizer ros2-easynav-costmap-localizer
+          ros-jazzy-easynav-costmap-localizer ros2-easynav-navmap-localizer ros-jazzy-easynav-navmap-localizer
+          ros2-easynav-simple-localizer ros-jazzy-easynav-simple-localizer
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_48_job_48:
+    name: ros2-easynav-gps-localizer easynav-gps-localizer
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_42_job_42
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-easynav-gps-localizer ros-jazzy-easynav-gps-localizer
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-easynav-gps-localizer ros-jazzy-easynav-gps-localizer
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_49_job_49:
+    name: ros2-easynav-serest-controller easynav-serest-controller
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_42_job_42
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-easynav-serest-controller ros-jazzy-easynav-serest-controller
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-easynav-serest-controller ros-jazzy-easynav-serest-controller
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_50_job_50:
+    name: ros2-easynav-simple-maps-manager easynav-simple-maps-manager
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_42_job_42
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-easynav-simple-maps-manager ros-jazzy-easynav-simple-maps-manager
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-easynav-simple-maps-manager ros-jazzy-easynav-simple-maps-manager
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_51_job_51:
+    name: ros2-easynav-support-py ros2-easynav-system easynav-system ros2-easynav-mpc-controller
+      easynav-mpc-controller ros2-easynav-mppi-controller easynav-mppi-controller
+      ros2-easynav-regulated-pp-controller easynav-regulated-pp-controller ros2-easynav-tools
+      ros2-easynav easynav
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_43_job_43
+    - stage_47_job_47
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-easynav-support-py ros2-easynav-system ros-jazzy-easynav-system
+        ros2-easynav-mpc-controller ros-jazzy-easynav-mpc-controller ros2-easynav-mppi-controller
+        ros-jazzy-easynav-mppi-controller ros2-easynav-regulated-pp-controller ros-jazzy-easynav-regulated-pp-controller
+        ros2-easynav-tools ros2-easynav ros-jazzy-easynav
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-easynav-support-py ros2-easynav-system ros-jazzy-easynav-system
+          ros2-easynav-mpc-controller ros-jazzy-easynav-mpc-controller ros2-easynav-mppi-controller
+          ros-jazzy-easynav-mppi-controller ros2-easynav-regulated-pp-controller ros-jazzy-easynav-regulated-pp-controller
+          ros2-easynav-tools ros2-easynav ros-jazzy-easynav
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_52_job_52:
+    name: ros2-imu-complementary-filter ros2-imu-filter-madgwick ros2-point-cloud-interfaces
+      ros2-point-cloud-transport ros2-draco-point-cloud-transport ros2-point-cloud-transport-py
+      ros2-rviz-2d-overlay-msgs ros2-rviz-common ros2-rviz-2d-overlay-plugins ros2-rviz-imu-plugin
+      ros2-imu-tools ros2-rviz-visual-testing-framework ros2-zlib-point-cloud-transport
+      ros2-zstd-point-cloud-transport ros2-point-cloud-transport-plugins
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_44_job_44
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-imu-complementary-filter ros2-imu-filter-madgwick ros2-point-cloud-interfaces
+        ros2-point-cloud-transport ros2-draco-point-cloud-transport ros2-point-cloud-transport-py
+        ros2-rviz-2d-overlay-msgs ros2-rviz-common ros2-rviz-2d-overlay-plugins ros2-rviz-imu-plugin
+        ros2-imu-tools ros2-rviz-visual-testing-framework ros2-zlib-point-cloud-transport
+        ros2-zstd-point-cloud-transport ros2-point-cloud-transport-plugins
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-imu-complementary-filter ros2-imu-filter-madgwick ros2-point-cloud-interfaces
+          ros2-point-cloud-transport ros2-draco-point-cloud-transport ros2-point-cloud-transport-py
+          ros2-rviz-2d-overlay-msgs ros2-rviz-common ros2-rviz-2d-overlay-plugins
+          ros2-rviz-imu-plugin ros2-imu-tools ros2-rviz-visual-testing-framework ros2-zlib-point-cloud-transport
+          ros2-zstd-point-cloud-transport ros2-point-cloud-transport-plugins
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_53_job_53:
+    name: ros2-octomap-msgs ros2-octomap-ros ros2-easynav-octomap-maps-manager easynav-octomap-maps-manager
+      ros2-octomap-server
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_44_job_44
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-octomap-msgs ros2-octomap-ros ros2-easynav-octomap-maps-manager
+        ros-jazzy-easynav-octomap-maps-manager ros2-octomap-server
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-octomap-msgs ros2-octomap-ros ros2-easynav-octomap-maps-manager
+          ros-jazzy-easynav-octomap-maps-manager ros2-octomap-server
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_54_job_54:
+    name: ros2-camera-calibration-parsers ros2-camera-info-manager ros2-image-publisher
+      ros2-map-msgs ros2-orbbec-camera-msgs ros2-sensor-msgs-py ros2-laser-geometry
+      ros2-rviz-default-plugins ros2-octomap-rviz-plugins ros2-rviz-satellite rviz-satellite
+      ros2-stereo-msgs ros2-image-view ros2-tf2-sensor-msgs ros2-dual-laser-merger
+      ros2-orbbec-camera ros2-pointcloud-to-laserscan ros2-v4l2-camera
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_52_job_52
+    - stage_53_job_53
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-camera-calibration-parsers ros2-camera-info-manager ros2-image-publisher
+        ros2-map-msgs ros2-orbbec-camera-msgs ros2-sensor-msgs-py ros2-laser-geometry
+        ros2-rviz-default-plugins ros2-octomap-rviz-plugins ros2-rviz-satellite ros-jazzy-rviz-satellite
+        ros2-stereo-msgs ros2-image-view ros2-tf2-sensor-msgs ros2-dual-laser-merger
+        ros2-orbbec-camera ros2-pointcloud-to-laserscan ros2-v4l2-camera
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-camera-calibration-parsers ros2-camera-info-manager
+          ros2-image-publisher ros2-map-msgs ros2-orbbec-camera-msgs ros2-sensor-msgs-py
+          ros2-laser-geometry ros2-rviz-default-plugins ros2-octomap-rviz-plugins
+          ros2-rviz-satellite ros-jazzy-rviz-satellite ros2-stereo-msgs ros2-image-view
+          ros2-tf2-sensor-msgs ros2-dual-laser-merger ros2-orbbec-camera ros2-pointcloud-to-laserscan
+          ros2-v4l2-camera
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_55_job_55:
+    name: ros2-examples-rclcpp-minimal-composition ros2-image-rotate ros2-ros2cli-test-interfaces
+      ros2-ros2doctor ros2-ros2interface ros2-ros2multicast ros2-ros2pkg ros2-ros2component
+      ros2-ros2launch ros2-ros2plugin ros2-ros2run ros2-ros2test ros2-ros-testing
+      ros2-lifecycle ros2-sros2 ros2-ros2cli-common-extensions ros2cli-common-extensions
+      ros2-sros2-cmake ros2-tracetools-image-pipeline ros2-image-proc ros2-depth-image-proc
+      ros2-stereo-image-proc ros2-image-pipeline image-pipeline
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_54_job_54
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-examples-rclcpp-minimal-composition ros2-image-rotate ros2-ros2cli-test-interfaces
+        ros2-ros2doctor ros2-ros2interface ros2-ros2multicast ros2-ros2pkg ros2-ros2component
+        ros2-ros2launch ros2-ros2plugin ros2-ros2run ros2-ros2test ros2-ros-testing
+        ros2-lifecycle ros2-sros2 ros2-ros2cli-common-extensions ros-jazzy-ros2cli-common-extensions
+        ros2-sros2-cmake ros2-tracetools-image-pipeline ros2-image-proc ros2-depth-image-proc
+        ros2-stereo-image-proc ros2-image-pipeline ros-jazzy-image-pipeline
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-examples-rclcpp-minimal-composition ros2-image-rotate
+          ros2-ros2cli-test-interfaces ros2-ros2doctor ros2-ros2interface ros2-ros2multicast
+          ros2-ros2pkg ros2-ros2component ros2-ros2launch ros2-ros2plugin ros2-ros2run
+          ros2-ros2test ros2-ros-testing ros2-lifecycle ros2-sros2 ros2-ros2cli-common-extensions
+          ros-jazzy-ros2cli-common-extensions ros2-sros2-cmake ros2-tracetools-image-pipeline
+          ros2-image-proc ros2-depth-image-proc ros2-stereo-image-proc ros2-image-pipeline
+          ros-jazzy-image-pipeline
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_56_job_56:
+    name: ros2-dynamixel-sdk ros2-robot-state-publisher ros2-depthai-descriptions
+      ros2-ros-gz-interfaces ros2-ros-gz-bridge ros2-ros-gz-image ros2-simulation-interfaces
+      ros2-ros-gz-sim ros2-turtlebot3-gazebo ros2-turtlebot3-msgs ros2-turtlebot3-fake-node
+      ros2-turtlebot3-node ros2-turtlebot3-simulations ros2-turtlebot4-gz-toolbox
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_34_job_34
+    - stage_39_job_39
+    - stage_55_job_55
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-dynamixel-sdk ros2-robot-state-publisher ros2-depthai-descriptions
+        ros2-ros-gz-interfaces ros2-ros-gz-bridge ros2-ros-gz-image ros2-simulation-interfaces
+        ros2-ros-gz-sim ros2-turtlebot3-gazebo ros2-turtlebot3-msgs ros2-turtlebot3-fake-node
+        ros2-turtlebot3-node ros2-turtlebot3-simulations ros2-turtlebot4-gz-toolbox
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-dynamixel-sdk ros2-robot-state-publisher ros2-depthai-descriptions
+          ros2-ros-gz-interfaces ros2-ros-gz-bridge ros2-ros-gz-image ros2-simulation-interfaces
+          ros2-ros-gz-sim ros2-turtlebot3-gazebo ros2-turtlebot3-msgs ros2-turtlebot3-fake-node
+          ros2-turtlebot3-node ros2-turtlebot3-simulations ros2-turtlebot4-gz-toolbox
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_57_job_57:
+    name: ros2-compressed-depth-image-transport ros2-compressed-image-transport ros2-depthai
+      ros2-depthai-bridge ros2-depthai-examples depthai-examples ros2-rplidar-ros
+      ros2-theora-image-transport ros2-image-transport-plugins ros2-depthai-ros-driver
+      depthai-ros-driver ros2-usb-cam
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_45_job_45
+    - stage_56_job_56
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-compressed-depth-image-transport ros2-compressed-image-transport
+        ros2-depthai ros2-depthai-bridge ros2-depthai-examples ros-jazzy-depthai-examples
+        ros2-rplidar-ros ros2-theora-image-transport ros2-image-transport-plugins
+        ros2-depthai-ros-driver ros-jazzy-depthai-ros-driver ros2-usb-cam
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-compressed-depth-image-transport ros2-compressed-image-transport
+          ros2-depthai ros2-depthai-bridge ros2-depthai-examples ros-jazzy-depthai-examples
+          ros2-rplidar-ros ros2-theora-image-transport ros2-image-transport-plugins
+          ros2-depthai-ros-driver ros-jazzy-depthai-ros-driver ros2-usb-cam
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_58_job_58:
+    name: ros2-example-interfaces ros2-controller-manager controller-manager ros2-demo-nodes-py
+      ros2-examples-rclcpp-minimal-publisher ros2-key-teleop ros2-teleop-tools-msgs
+      ros2-joy-teleop ros2-teleop-tools ros2-topic-monitor
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_56_job_56
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-example-interfaces ros2-controller-manager ros-jazzy-controller-manager
+        ros2-demo-nodes-py ros2-examples-rclcpp-minimal-publisher ros2-key-teleop
+        ros2-teleop-tools-msgs ros2-joy-teleop ros2-teleop-tools ros2-topic-monitor
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-example-interfaces ros2-controller-manager ros-jazzy-controller-manager
+          ros2-demo-nodes-py ros2-examples-rclcpp-minimal-publisher ros2-key-teleop
+          ros2-teleop-tools-msgs ros2-joy-teleop ros2-teleop-tools ros2-topic-monitor
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_59_job_59:
+    name: ros2-composition ros2-image-tools ros2-intra-process-demo ros2-turtlesim
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_58_job_58
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-composition ros2-image-tools ros2-intra-process-demo ros2-turtlesim
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-composition ros2-image-tools ros2-intra-process-demo
+          ros2-turtlesim
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_60_job_60:
+    name: ros2-control-toolbox ros2-diff-drive-controller diff-drive-controller ros2-gripper-controllers
+      gripper-controllers ros2-mecanum-drive-controller mecanum-drive-controller ros2-tricycle-controller
+      tricycle-controller
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_58_job_58
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-control-toolbox ros2-diff-drive-controller ros-jazzy-diff-drive-controller
+        ros2-gripper-controllers ros-jazzy-gripper-controllers ros2-mecanum-drive-controller
+        ros-jazzy-mecanum-drive-controller ros2-tricycle-controller ros-jazzy-tricycle-controller
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-control-toolbox ros2-diff-drive-controller ros-jazzy-diff-drive-controller
+          ros2-gripper-controllers ros-jazzy-gripper-controllers ros2-mecanum-drive-controller
+          ros-jazzy-mecanum-drive-controller ros2-tricycle-controller ros-jazzy-tricycle-controller
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_61_job_61:
+    name: ros2-chained-filter-controller chained-filter-controller ros2-imu-sensor-broadcaster
+      imu-sensor-broadcaster ros2-magnetometer-broadcaster magnetometer-broadcaster
+      ros2-omni-wheel-drive-controller omni-wheel-drive-controller ros2-pid-controller
+      pid-controller ros2-pose-broadcaster pose-broadcaster ros2-state-interfaces-broadcaster
+      state-interfaces-broadcaster ros2-steering-controllers-library steering-controllers-library
+      ros2-ackermann-steering-controller ackermann-steering-controller ros2-tricycle-steering-controller
+      tricycle-steering-controller
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_60_job_60
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-chained-filter-controller ros-jazzy-chained-filter-controller
+        ros2-imu-sensor-broadcaster ros-jazzy-imu-sensor-broadcaster ros2-magnetometer-broadcaster
+        ros-jazzy-magnetometer-broadcaster ros2-omni-wheel-drive-controller ros-jazzy-omni-wheel-drive-controller
+        ros2-pid-controller ros-jazzy-pid-controller ros2-pose-broadcaster ros-jazzy-pose-broadcaster
+        ros2-state-interfaces-broadcaster ros-jazzy-state-interfaces-broadcaster ros2-steering-controllers-library
+        ros-jazzy-steering-controllers-library ros2-ackermann-steering-controller
+        ros-jazzy-ackermann-steering-controller ros2-tricycle-steering-controller
+        ros-jazzy-tricycle-steering-controller
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-chained-filter-controller ros-jazzy-chained-filter-controller
+          ros2-imu-sensor-broadcaster ros-jazzy-imu-sensor-broadcaster ros2-magnetometer-broadcaster
+          ros-jazzy-magnetometer-broadcaster ros2-omni-wheel-drive-controller ros-jazzy-omni-wheel-drive-controller
+          ros2-pid-controller ros-jazzy-pid-controller ros2-pose-broadcaster ros-jazzy-pose-broadcaster
+          ros2-state-interfaces-broadcaster ros-jazzy-state-interfaces-broadcaster
+          ros2-steering-controllers-library ros-jazzy-steering-controllers-library
+          ros2-ackermann-steering-controller ros-jazzy-ackermann-steering-controller
+          ros2-tricycle-steering-controller ros-jazzy-tricycle-steering-controller
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_62_job_62:
+    name: ros2-demo-nodes-cpp ros2-demo-nodes-cpp-native ros2-depthimage-to-laserscan
+      ros2-quality-of-service-demo-cpp
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_58_job_58
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-demo-nodes-cpp ros2-demo-nodes-cpp-native ros2-depthimage-to-laserscan
+        ros2-quality-of-service-demo-cpp
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-demo-nodes-cpp ros2-demo-nodes-cpp-native ros2-depthimage-to-laserscan
+          ros2-quality-of-service-demo-cpp
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_63_job_63:
+    name: ros2-dummy-map-server ros2-dummy-sensors ros2-dummy-robot-bringup ros2-examples-rclcpp-minimal-action-server
+      ros2-examples-rclcpp-minimal-client ros2-pendulum-msgs ros2-rttest ros2-tlsf
+      ros2-tlsf-cpp ros2-pendulum-control
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_58_job_58
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-dummy-map-server ros2-dummy-sensors ros2-dummy-robot-bringup
+        ros2-examples-rclcpp-minimal-action-server ros2-examples-rclcpp-minimal-client
+        ros2-pendulum-msgs ros2-rttest ros2-tlsf ros2-tlsf-cpp ros2-pendulum-control
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-dummy-map-server ros2-dummy-sensors ros2-dummy-robot-bringup
+          ros2-examples-rclcpp-minimal-action-server ros2-examples-rclcpp-minimal-client
+          ros2-pendulum-msgs ros2-rttest ros2-tlsf ros2-tlsf-cpp ros2-pendulum-control
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_64_job_64:
+    name: ros2-examples-rclcpp-minimal-action-client ros2-examples-rclcpp-minimal-service
+      ros2-examples-rclcpp-minimal-timer ros2-examples-rclcpp-multithreaded-executor
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_58_job_58
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-examples-rclcpp-minimal-action-client ros2-examples-rclcpp-minimal-service
+        ros2-examples-rclcpp-minimal-timer ros2-examples-rclcpp-multithreaded-executor
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-examples-rclcpp-minimal-action-client ros2-examples-rclcpp-minimal-service
+          ros2-examples-rclcpp-minimal-timer ros2-examples-rclcpp-multithreaded-executor
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_65_job_65:
+    name: ros2-flir-ptu-description ros2-realsense2-camera-msgs ros2-realsense2-description
+      ros2-rviz2 rviz2 ros2-velodyne-description ros2-vision-msgs-rviz-plugins vision-msgs-rviz-plugins
+      ros2-zed-description zed-description ros2-clearpath-sensors-description clearpath-sensors-description
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_25_job_25
+    - stage_54_job_54
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-flir-ptu-description ros2-realsense2-camera-msgs ros2-realsense2-description
+        ros2-rviz2 ros-jazzy-rviz2 ros2-velodyne-description ros2-vision-msgs-rviz-plugins
+        ros-jazzy-vision-msgs-rviz-plugins ros2-zed-description ros-jazzy-zed-description
+        ros2-clearpath-sensors-description ros-jazzy-clearpath-sensors-description
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-flir-ptu-description ros2-realsense2-camera-msgs ros2-realsense2-description
+          ros2-rviz2 ros-jazzy-rviz2 ros2-velodyne-description ros2-vision-msgs-rviz-plugins
+          ros-jazzy-vision-msgs-rviz-plugins ros2-zed-description ros-jazzy-zed-description
+          ros2-clearpath-sensors-description ros-jazzy-clearpath-sensors-description
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_66_job_66:
+    name: ros2-actionlib-msgs ros2-eigen-stl-containers ros2-mavlink ros2-libmavconn
+      ros2-mavros ros2-mavros-extras ros2-random-numbers ros2-shape-msgs ros2-common-interfaces
+      ros2-geometric-shapes ros2-object-recognition-msgs ros2-moveit-msgs ros2-ros-core
+      ros-core ros2-rviz-visual-tools rviz-visual-tools ros2-urdfdom-py ros2-srdfdom
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_55_job_55
+    - stage_65_job_65
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-actionlib-msgs ros2-eigen-stl-containers ros2-mavlink ros2-libmavconn
+        ros2-mavros ros2-mavros-extras ros2-random-numbers ros2-shape-msgs ros2-common-interfaces
+        ros2-geometric-shapes ros2-object-recognition-msgs ros2-moveit-msgs ros2-ros-core
+        ros-jazzy-ros-core ros2-rviz-visual-tools ros-jazzy-rviz-visual-tools ros2-urdfdom-py
+        ros2-srdfdom
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-actionlib-msgs ros2-eigen-stl-containers ros2-mavlink
+          ros2-libmavconn ros2-mavros ros2-mavros-extras ros2-random-numbers ros2-shape-msgs
+          ros2-common-interfaces ros2-geometric-shapes ros2-object-recognition-msgs
+          ros2-moveit-msgs ros2-ros-core ros-jazzy-ros-core ros2-rviz-visual-tools
+          ros-jazzy-rviz-visual-tools ros2-urdfdom-py ros2-srdfdom
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_67_job_67:
+    name: ros2-clearpath-mounts-description ros2-clearpath-platform-description ros2-ewellix-description
+      ros2-joint-state-publisher ros2-joint-state-publisher-gui ros2-robotiq-description
+      robotiq-description ros2-ur-description ur-description ros2-clearpath-manipulators-description
+      clearpath-manipulators-description ros2-clearpath-description clearpath-description
+      ros2-urdf-launch urdf-launch ros2-urdf-tutorial urdf-tutorial
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_56_job_56
+    - stage_65_job_65
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-clearpath-mounts-description ros2-clearpath-platform-description
+        ros2-ewellix-description ros2-joint-state-publisher ros2-joint-state-publisher-gui
+        ros2-robotiq-description ros-jazzy-robotiq-description ros2-ur-description
+        ros-jazzy-ur-description ros2-clearpath-manipulators-description ros-jazzy-clearpath-manipulators-description
+        ros2-clearpath-description ros-jazzy-clearpath-description ros2-urdf-launch
+        ros-jazzy-urdf-launch ros2-urdf-tutorial ros-jazzy-urdf-tutorial
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-clearpath-mounts-description ros2-clearpath-platform-description
+          ros2-ewellix-description ros2-joint-state-publisher ros2-joint-state-publisher-gui
+          ros2-robotiq-description ros-jazzy-robotiq-description ros2-ur-description
+          ros-jazzy-ur-description ros2-clearpath-manipulators-description ros-jazzy-clearpath-manipulators-description
+          ros2-clearpath-description ros-jazzy-clearpath-description ros2-urdf-launch
+          ros-jazzy-urdf-launch ros2-urdf-tutorial ros-jazzy-urdf-tutorial
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_68_job_68:
+    name: ros2-forward-command-controller forward-command-controller ros2-moveit-resources-fanuc-description
+      ros2-moveit-resources-panda-description ros2-moveit-resources-pr2-description
+      ros2-position-controllers position-controllers ros2-moveit-resources-fanuc-moveit-config
+      moveit-resources-fanuc-moveit-config ros2-python-orocos-kdl-vendor ros2-tf2-kdl
+      ros2-topic-tools-interfaces ros2-topic-tools ros2-moveit-resources-panda-moveit-config
+      moveit-resources-panda-moveit-config ros2-moveit-resources moveit-resources
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_60_job_60
+    - stage_67_job_67
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-forward-command-controller ros-jazzy-forward-command-controller
+        ros2-moveit-resources-fanuc-description ros2-moveit-resources-panda-description
+        ros2-moveit-resources-pr2-description ros2-position-controllers ros-jazzy-position-controllers
+        ros2-moveit-resources-fanuc-moveit-config ros-jazzy-moveit-resources-fanuc-moveit-config
+        ros2-python-orocos-kdl-vendor ros2-tf2-kdl ros2-topic-tools-interfaces ros2-topic-tools
+        ros2-moveit-resources-panda-moveit-config ros-jazzy-moveit-resources-panda-moveit-config
+        ros2-moveit-resources ros-jazzy-moveit-resources
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-forward-command-controller ros-jazzy-forward-command-controller
+          ros2-moveit-resources-fanuc-description ros2-moveit-resources-panda-description
+          ros2-moveit-resources-pr2-description ros2-position-controllers ros-jazzy-position-controllers
+          ros2-moveit-resources-fanuc-moveit-config ros-jazzy-moveit-resources-fanuc-moveit-config
+          ros2-python-orocos-kdl-vendor ros2-tf2-kdl ros2-topic-tools-interfaces ros2-topic-tools
+          ros2-moveit-resources-panda-moveit-config ros-jazzy-moveit-resources-panda-moveit-config
+          ros2-moveit-resources ros-jazzy-moveit-resources
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_69_job_69:
+    name: ros2-nav2-lifecycle-manager ros2-nav2-costmap-2d nav2-costmap-2d ros2-costmap-queue
+      costmap-queue ros2-openvdb-vendor ros2-spatio-temporal-voxel-layer spatio-temporal-voxel-layer
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_46_job_46
+    - stage_54_job_54
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-nav2-lifecycle-manager ros2-nav2-costmap-2d ros-jazzy-nav2-costmap-2d
+        ros2-costmap-queue ros-jazzy-costmap-queue ros2-openvdb-vendor ros2-spatio-temporal-voxel-layer
+        ros-jazzy-spatio-temporal-voxel-layer
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-nav2-lifecycle-manager ros2-nav2-costmap-2d ros-jazzy-nav2-costmap-2d
+          ros2-costmap-queue ros-jazzy-costmap-queue ros2-openvdb-vendor ros2-spatio-temporal-voxel-layer
+          ros-jazzy-spatio-temporal-voxel-layer
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_70_job_70:
+    name: ros2-behaviortree-cpp ros2-nav2-behavior-tree ros2-nav2-core nav2-core ros2-nav2-constrained-smoother
+      nav2-constrained-smoother ros2-nav2-route nav2-route ros2-nav2-rviz-plugins
+      nav2-rviz-plugins
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_69_job_69
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-behaviortree-cpp ros2-nav2-behavior-tree ros2-nav2-core ros-jazzy-nav2-core
+        ros2-nav2-constrained-smoother ros-jazzy-nav2-constrained-smoother ros2-nav2-route
+        ros-jazzy-nav2-route ros2-nav2-rviz-plugins ros-jazzy-nav2-rviz-plugins
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-behaviortree-cpp ros2-nav2-behavior-tree ros2-nav2-core
+          ros-jazzy-nav2-core ros2-nav2-constrained-smoother ros-jazzy-nav2-constrained-smoother
+          ros2-nav2-route ros-jazzy-nav2-route ros2-nav2-rviz-plugins ros-jazzy-nav2-rviz-plugins
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_71_job_71:
+    name: ros2-nav-2d-utils ros2-nav2-controller nav2-controller ros2-nav2-graceful-controller
+      nav2-graceful-controller ros2-nav2-regulated-pure-pursuit-controller nav2-regulated-pure-pursuit-controller
+      ros2-nav2-rotation-shim-controller nav2-rotation-shim-controller ros2-opennav-docking-core
+      ros2-opennav-docking opennav-docking
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_70_job_70
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-nav-2d-utils ros2-nav2-controller ros-jazzy-nav2-controller
+        ros2-nav2-graceful-controller ros-jazzy-nav2-graceful-controller ros2-nav2-regulated-pure-pursuit-controller
+        ros-jazzy-nav2-regulated-pure-pursuit-controller ros2-nav2-rotation-shim-controller
+        ros-jazzy-nav2-rotation-shim-controller ros2-opennav-docking-core ros2-opennav-docking
+        ros-jazzy-opennav-docking
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-nav-2d-utils ros2-nav2-controller ros-jazzy-nav2-controller
+          ros2-nav2-graceful-controller ros-jazzy-nav2-graceful-controller ros2-nav2-regulated-pure-pursuit-controller
+          ros-jazzy-nav2-regulated-pure-pursuit-controller ros2-nav2-rotation-shim-controller
+          ros-jazzy-nav2-rotation-shim-controller ros2-opennav-docking-core ros2-opennav-docking
+          ros-jazzy-opennav-docking
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_72_job_72:
+    name: ros2-dwb-core dwb-core ros2-dwb-critics dwb-critics ros2-dwb-plugins dwb-plugins
+      ros2-nav2-dwb-controller nav2-dwb-controller
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_71_job_71
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-dwb-core ros-jazzy-dwb-core ros2-dwb-critics ros-jazzy-dwb-critics
+        ros2-dwb-plugins ros-jazzy-dwb-plugins ros2-nav2-dwb-controller ros-jazzy-nav2-dwb-controller
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-dwb-core ros-jazzy-dwb-core ros2-dwb-critics ros-jazzy-dwb-critics
+          ros2-dwb-plugins ros-jazzy-dwb-plugins ros2-nav2-dwb-controller ros-jazzy-nav2-dwb-controller
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_73_job_73:
+    name: ros2-nav2-collision-monitor nav2-collision-monitor ros2-nav2-smoother nav2-smoother
+      ros2-nav2-theta-star-planner nav2-theta-star-planner ros2-opennav-docking-bt
+      opennav-docking-bt
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_71_job_71
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-nav2-collision-monitor ros-jazzy-nav2-collision-monitor ros2-nav2-smoother
+        ros-jazzy-nav2-smoother ros2-nav2-theta-star-planner ros-jazzy-nav2-theta-star-planner
+        ros2-opennav-docking-bt ros-jazzy-opennav-docking-bt
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-nav2-collision-monitor ros-jazzy-nav2-collision-monitor
+          ros2-nav2-smoother ros-jazzy-nav2-smoother ros2-nav2-theta-star-planner
+          ros-jazzy-nav2-theta-star-planner ros2-opennav-docking-bt ros-jazzy-opennav-docking-bt
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_74_job_74:
+    name: ros2-osqp-vendor ros2-moveit-core moveit-core ros2-moveit-ros-occupancy-map-monitor
+      moveit-ros-occupancy-map-monitor ros2-trac-ik-kinematics-plugin trac-ik-kinematics-plugin
+      ros2-trac-ik trac-ik
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_66_job_66
+    - stage_68_job_68
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-osqp-vendor ros2-moveit-core ros-jazzy-moveit-core ros2-moveit-ros-occupancy-map-monitor
+        ros-jazzy-moveit-ros-occupancy-map-monitor ros2-trac-ik-kinematics-plugin
+        ros-jazzy-trac-ik-kinematics-plugin ros2-trac-ik ros-jazzy-trac-ik
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-osqp-vendor ros2-moveit-core ros-jazzy-moveit-core ros2-moveit-ros-occupancy-map-monitor
+          ros-jazzy-moveit-ros-occupancy-map-monitor ros2-trac-ik-kinematics-plugin
+          ros-jazzy-trac-ik-kinematics-plugin ros2-trac-ik ros-jazzy-trac-ik
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_75_job_75:
+    name: ros2-chomp-motion-planner chomp-motion-planner ros2-moveit-planners-chomp
+      moveit-planners-chomp ros2-moveit-simple-controller-manager moveit-simple-controller-manager
+      ros2-moveit-plugins moveit-plugins ros2-moveit-ros-control-interface moveit-ros-control-interface
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_74_job_74
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-chomp-motion-planner ros-jazzy-chomp-motion-planner ros2-moveit-planners-chomp
+        ros-jazzy-moveit-planners-chomp ros2-moveit-simple-controller-manager ros-jazzy-moveit-simple-controller-manager
+        ros2-moveit-plugins ros-jazzy-moveit-plugins ros2-moveit-ros-control-interface
+        ros-jazzy-moveit-ros-control-interface
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-chomp-motion-planner ros-jazzy-chomp-motion-planner
+          ros2-moveit-planners-chomp ros-jazzy-moveit-planners-chomp ros2-moveit-simple-controller-manager
+          ros-jazzy-moveit-simple-controller-manager ros2-moveit-plugins ros-jazzy-moveit-plugins
+          ros2-moveit-ros-control-interface ros-jazzy-moveit-ros-control-interface
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_76_job_76:
+    name: ros2-launch-param-builder ros2-moveit-configs-utils ros2-moveit-ros-planning
+      moveit-ros-planning ros2-moveit-kinematics moveit-kinematics ros2-moveit-ros-move-group
+      moveit-ros-move-group ros2-moveit-ros-robot-interaction moveit-ros-robot-interaction
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_74_job_74
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-launch-param-builder ros2-moveit-configs-utils ros2-moveit-ros-planning
+        ros-jazzy-moveit-ros-planning ros2-moveit-kinematics ros-jazzy-moveit-kinematics
+        ros2-moveit-ros-move-group ros-jazzy-moveit-ros-move-group ros2-moveit-ros-robot-interaction
+        ros-jazzy-moveit-ros-robot-interaction
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-launch-param-builder ros2-moveit-configs-utils ros2-moveit-ros-planning
+          ros-jazzy-moveit-ros-planning ros2-moveit-kinematics ros-jazzy-moveit-kinematics
+          ros2-moveit-ros-move-group ros-jazzy-moveit-ros-move-group ros2-moveit-ros-robot-interaction
+          ros-jazzy-moveit-ros-robot-interaction
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_77_job_77:
+    name: ros2-plansys2-msgs ros2-plansys2-pddl-parser ros2-plansys2-core ros2-plansys2-support-py
+      ros2-popf ros2-plansys2-popf-plan-solver ros2-plansys2-domain-expert ros2-plansys2-problem-expert
+      ros2-plansys2-planner plansys2-planner ros2-qt-gui-cpp ros2-rqt-gui-cpp ros2-plansys2-tools
+      plansys2-tools ros2-rqt-image-view ros2-ros-gz-sim-demos ros-gz-sim-demos ros2-ros-gz
+      ros-gz ros2-irobot-create-gz-plugins irobot-create-gz-plugins
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_57_job_57
+    - stage_65_job_65
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-plansys2-msgs ros2-plansys2-pddl-parser ros2-plansys2-core
+        ros2-plansys2-support-py ros2-popf ros2-plansys2-popf-plan-solver ros2-plansys2-domain-expert
+        ros2-plansys2-problem-expert ros2-plansys2-planner ros-jazzy-plansys2-planner
+        ros2-qt-gui-cpp ros2-rqt-gui-cpp ros2-plansys2-tools ros-jazzy-plansys2-tools
+        ros2-rqt-image-view ros2-ros-gz-sim-demos ros-jazzy-ros-gz-sim-demos ros2-ros-gz
+        ros-jazzy-ros-gz ros2-irobot-create-gz-plugins ros-jazzy-irobot-create-gz-plugins
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-plansys2-msgs ros2-plansys2-pddl-parser ros2-plansys2-core
+          ros2-plansys2-support-py ros2-popf ros2-plansys2-popf-plan-solver ros2-plansys2-domain-expert
+          ros2-plansys2-problem-expert ros2-plansys2-planner ros-jazzy-plansys2-planner
+          ros2-qt-gui-cpp ros2-rqt-gui-cpp ros2-plansys2-tools ros-jazzy-plansys2-tools
+          ros2-rqt-image-view ros2-ros-gz-sim-demos ros-jazzy-ros-gz-sim-demos ros2-ros-gz
+          ros-jazzy-ros-gz ros2-irobot-create-gz-plugins ros-jazzy-irobot-create-gz-plugins
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_78_job_78:
+    name: ros2-cascade-lifecycle-msgs ros2-rclcpp-cascade-lifecycle ros2-plansys2-executor
+      plansys2-executor ros2-plansys2-bt-actions plansys2-bt-actions ros2-plansys2-terminal
+      plansys2-terminal ros2-plansys2-tests plansys2-tests
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_70_job_70
+    - stage_77_job_77
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-cascade-lifecycle-msgs ros2-rclcpp-cascade-lifecycle ros2-plansys2-executor
+        ros-jazzy-plansys2-executor ros2-plansys2-bt-actions ros-jazzy-plansys2-bt-actions
+        ros2-plansys2-terminal ros-jazzy-plansys2-terminal ros2-plansys2-tests ros-jazzy-plansys2-tests
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-cascade-lifecycle-msgs ros2-rclcpp-cascade-lifecycle
+          ros2-plansys2-executor ros-jazzy-plansys2-executor ros2-plansys2-bt-actions
+          ros-jazzy-plansys2-bt-actions ros2-plansys2-terminal ros-jazzy-plansys2-terminal
+          ros2-plansys2-tests ros-jazzy-plansys2-tests
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_79_job_79:
+    name: ros2-plansys2-bringup plansys2-bringup
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_78_job_78
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-plansys2-bringup ros-jazzy-plansys2-bringup
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-plansys2-bringup ros-jazzy-plansys2-bringup
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_80_job_80:
+    name: ros2-py-trees ros2-py-trees-js ros2-py-trees-ros-interfaces ros2-py-trees-ros
+      ros2-py-trees-ros-tutorials ros2-py-trees-ros-viewer
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_55_job_55
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-py-trees ros2-py-trees-js ros2-py-trees-ros-interfaces ros2-py-trees-ros
+        ros2-py-trees-ros-tutorials ros2-py-trees-ros-viewer
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-py-trees ros2-py-trees-js ros2-py-trees-ros-interfaces
+          ros2-py-trees-ros ros2-py-trees-ros-tutorials ros2-py-trees-ros-viewer
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_81_job_81:
+    name: ros2-rosbag2-test-common ros2-rosbag2-storage ros2-sqlite3-vendor ros2-rosbag2-storage-sqlite3
+      ros2-warehouse-ros ros2-moveit-ros-warehouse moveit-ros-warehouse ros2-moveit-ros-benchmarks
+      moveit-ros-benchmarks ros2-warehouse-ros-sqlite
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_76_job_76
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-rosbag2-test-common ros2-rosbag2-storage ros2-sqlite3-vendor
+        ros2-rosbag2-storage-sqlite3 ros2-warehouse-ros ros2-moveit-ros-warehouse
+        ros-jazzy-moveit-ros-warehouse ros2-moveit-ros-benchmarks ros-jazzy-moveit-ros-benchmarks
+        ros2-warehouse-ros-sqlite
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-rosbag2-test-common ros2-rosbag2-storage ros2-sqlite3-vendor
+          ros2-rosbag2-storage-sqlite3 ros2-warehouse-ros ros2-moveit-ros-warehouse
+          ros-jazzy-moveit-ros-warehouse ros2-moveit-ros-benchmarks ros-jazzy-moveit-ros-benchmarks
+          ros2-warehouse-ros-sqlite
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_82_job_82:
+    name: ros2-cloudini-lib ros2-liblz4-vendor ros2-rosbag2-test-msgdefs ros2-zstd-vendor
+      ros2-mcap-vendor ros2-rosbag2-storage-mcap ros2-rosbag2-storage-default-plugins
+      ros2-rosbag2-cpp ros2-cloudini-ros ros2-rosbag2-compression ros2-rosbag2-compression-zstd
+      rosbag2-compression-zstd
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_45_job_45
+    - stage_81_job_81
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-cloudini-lib ros2-liblz4-vendor ros2-rosbag2-test-msgdefs ros2-zstd-vendor
+        ros2-mcap-vendor ros2-rosbag2-storage-mcap ros2-rosbag2-storage-default-plugins
+        ros2-rosbag2-cpp ros2-cloudini-ros ros2-rosbag2-compression ros2-rosbag2-compression-zstd
+        ros-jazzy-rosbag2-compression-zstd
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-cloudini-lib ros2-liblz4-vendor ros2-rosbag2-test-msgdefs
+          ros2-zstd-vendor ros2-mcap-vendor ros2-rosbag2-storage-mcap ros2-rosbag2-storage-default-plugins
+          ros2-rosbag2-cpp ros2-cloudini-ros ros2-rosbag2-compression ros2-rosbag2-compression-zstd
+          ros-jazzy-rosbag2-compression-zstd
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_83_job_83:
+    name: ros2-grid-map-costmap-2d grid-map-costmap-2d ros2-grid-map-ros ros2-grid-map-filters
+      grid-map-filters ros2-grid-map-loader ros2-grid-map-pcl grid-map-pcl ros2-grid-map-rviz-plugin
+      ros2-grid-map-visualization ros2-octomap ros2-grid-map-octomap ros2-grid-map-demos
+      grid-map-demos ros2-grid-map grid-map
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_69_job_69
+    - stage_82_job_82
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-grid-map-costmap-2d ros-jazzy-grid-map-costmap-2d ros2-grid-map-ros
+        ros2-grid-map-filters ros-jazzy-grid-map-filters ros2-grid-map-loader ros2-grid-map-pcl
+        ros-jazzy-grid-map-pcl ros2-grid-map-rviz-plugin ros2-grid-map-visualization
+        ros2-octomap ros2-grid-map-octomap ros2-grid-map-demos ros-jazzy-grid-map-demos
+        ros2-grid-map ros-jazzy-grid-map
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-grid-map-costmap-2d ros-jazzy-grid-map-costmap-2d ros2-grid-map-ros
+          ros2-grid-map-filters ros-jazzy-grid-map-filters ros2-grid-map-loader ros2-grid-map-pcl
+          ros-jazzy-grid-map-pcl ros2-grid-map-rviz-plugin ros2-grid-map-visualization
+          ros2-octomap ros2-grid-map-octomap ros2-grid-map-demos ros-jazzy-grid-map-demos
+          ros2-grid-map ros-jazzy-grid-map
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_84_job_84:
+    name: ros2-moveit-ros-planning-interface moveit-ros-planning-interface ros2-lbr-moveit-cpp
+      lbr-moveit-cpp ros2-moveit-ros-visualization moveit-ros-visualization ros2-moveit-setup-framework
+      moveit-setup-framework ros2-moveit-setup-srdf-plugins moveit-setup-srdf-plugins
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_75_job_75
+    - stage_81_job_81
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-moveit-ros-planning-interface ros-jazzy-moveit-ros-planning-interface
+        ros2-lbr-moveit-cpp ros-jazzy-lbr-moveit-cpp ros2-moveit-ros-visualization
+        ros-jazzy-moveit-ros-visualization ros2-moveit-setup-framework ros-jazzy-moveit-setup-framework
+        ros2-moveit-setup-srdf-plugins ros-jazzy-moveit-setup-srdf-plugins
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-moveit-ros-planning-interface ros-jazzy-moveit-ros-planning-interface
+          ros2-lbr-moveit-cpp ros-jazzy-lbr-moveit-cpp ros2-moveit-ros-visualization
+          ros-jazzy-moveit-ros-visualization ros2-moveit-setup-framework ros-jazzy-moveit-setup-framework
+          ros2-moveit-setup-srdf-plugins ros-jazzy-moveit-setup-srdf-plugins
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_85_job_85:
+    name: ros2-joint-state-broadcaster joint-state-broadcaster ros2-joint-trajectory-controller
+      joint-trajectory-controller ros2-picknik-ament-copyright ros2-sdl2-vendor ros2-joy
+      ros2-moveit-servo moveit-servo ros2-teleop-twist-joy ros2-topic-based-ros2-control
+      topic-based-ros2-control ros2-ur-dashboard-msgs ros2-ur-controllers ur-controllers
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_84_job_84
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-joint-state-broadcaster ros-jazzy-joint-state-broadcaster ros2-joint-trajectory-controller
+        ros-jazzy-joint-trajectory-controller ros2-picknik-ament-copyright ros2-sdl2-vendor
+        ros2-joy ros2-moveit-servo ros-jazzy-moveit-servo ros2-teleop-twist-joy ros2-topic-based-ros2-control
+        ros-jazzy-topic-based-ros2-control ros2-ur-dashboard-msgs ros2-ur-controllers
+        ros-jazzy-ur-controllers
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-joint-state-broadcaster ros-jazzy-joint-state-broadcaster
+          ros2-joint-trajectory-controller ros-jazzy-joint-trajectory-controller ros2-picknik-ament-copyright
+          ros2-sdl2-vendor ros2-joy ros2-moveit-servo ros-jazzy-moveit-servo ros2-teleop-twist-joy
+          ros2-topic-based-ros2-control ros-jazzy-topic-based-ros2-control ros2-ur-dashboard-msgs
+          ros2-ur-controllers ros-jazzy-ur-controllers
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_86_job_86:
+    name: ros2-battery-state-broadcaster battery-state-broadcaster ros2-effort-controllers
+      effort-controllers ros2-force-torque-sensor-broadcaster force-torque-sensor-broadcaster
+      ros2-velocity-controllers velocity-controllers ros2-ur-robot-driver ur-robot-driver
+      ros2-ur-calibration ur-calibration
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_61_job_61
+    - stage_85_job_85
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-battery-state-broadcaster ros-jazzy-battery-state-broadcaster
+        ros2-effort-controllers ros-jazzy-effort-controllers ros2-force-torque-sensor-broadcaster
+        ros-jazzy-force-torque-sensor-broadcaster ros2-velocity-controllers ros-jazzy-velocity-controllers
+        ros2-ur-robot-driver ros-jazzy-ur-robot-driver ros2-ur-calibration ros-jazzy-ur-calibration
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-battery-state-broadcaster ros-jazzy-battery-state-broadcaster
+          ros2-effort-controllers ros-jazzy-effort-controllers ros2-force-torque-sensor-broadcaster
+          ros-jazzy-force-torque-sensor-broadcaster ros2-velocity-controllers ros-jazzy-velocity-controllers
+          ros2-ur-robot-driver ros-jazzy-ur-robot-driver ros2-ur-calibration ros-jazzy-ur-calibration
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_87_job_87:
+    name: ros2-moveit-py moveit-py ros2-moveit-task-constructor-msgs ros2-rviz-marker-tools
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_84_job_84
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-moveit-py ros-jazzy-moveit-py ros2-moveit-task-constructor-msgs
+        ros2-rviz-marker-tools
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-moveit-py ros-jazzy-moveit-py ros2-moveit-task-constructor-msgs
+          ros2-rviz-marker-tools
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_88_job_88:
+    name: ros2-nav2-bt-navigator nav2-bt-navigator ros2-nav2-mppi-controller nav2-mppi-controller
+      ros2-nav2-navfn-planner nav2-navfn-planner ros2-ompl ros2-moveit-planners-ompl
+      moveit-planners-ompl ros2-moveit-hybrid-planning moveit-hybrid-planning ros2-nav2-smac-planner
+      nav2-smac-planner
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_70_job_70
+    - stage_84_job_84
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-nav2-bt-navigator ros-jazzy-nav2-bt-navigator ros2-nav2-mppi-controller
+        ros-jazzy-nav2-mppi-controller ros2-nav2-navfn-planner ros-jazzy-nav2-navfn-planner
+        ros2-ompl ros2-moveit-planners-ompl ros-jazzy-moveit-planners-ompl ros2-moveit-hybrid-planning
+        ros-jazzy-moveit-hybrid-planning ros2-nav2-smac-planner ros-jazzy-nav2-smac-planner
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-nav2-bt-navigator ros-jazzy-nav2-bt-navigator ros2-nav2-mppi-controller
+          ros-jazzy-nav2-mppi-controller ros2-nav2-navfn-planner ros-jazzy-nav2-navfn-planner
+          ros2-ompl ros2-moveit-planners-ompl ros-jazzy-moveit-planners-ompl ros2-moveit-hybrid-planning
+          ros-jazzy-moveit-hybrid-planning ros2-nav2-smac-planner ros-jazzy-nav2-smac-planner
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_89_job_89:
+    name: ros2-nav2-behaviors nav2-behaviors ros2-nav2-minimal-tb3-sim ros2-nav2-planner
+      nav2-planner ros2-nav2-velocity-smoother ros2-robot-localization ros2-easynav-fusion-localizer
+      easynav-fusion-localizer ros2-nav2-waypoint-follower nav2-waypoint-follower
+      ros2-navigation2 navigation2
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_47_job_47
+    - stage_72_job_72
+    - stage_73_job_73
+    - stage_88_job_88
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-nav2-behaviors ros-jazzy-nav2-behaviors ros2-nav2-minimal-tb3-sim
+        ros2-nav2-planner ros-jazzy-nav2-planner ros2-nav2-velocity-smoother ros2-robot-localization
+        ros2-easynav-fusion-localizer ros-jazzy-easynav-fusion-localizer ros2-nav2-waypoint-follower
+        ros-jazzy-nav2-waypoint-follower ros2-navigation2 ros-jazzy-navigation2
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-nav2-behaviors ros-jazzy-nav2-behaviors ros2-nav2-minimal-tb3-sim
+          ros2-nav2-planner ros-jazzy-nav2-planner ros2-nav2-velocity-smoother ros2-robot-localization
+          ros2-easynav-fusion-localizer ros-jazzy-easynav-fusion-localizer ros2-nav2-waypoint-follower
+          ros-jazzy-nav2-waypoint-follower ros2-navigation2 ros-jazzy-navigation2
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_90_job_90:
+    name: ros2-nav2-minimal-tb4-description ros2-nav2-minimal-tb4-sim ros2-slam-toolbox
+      slam-toolbox ros2-nav2-bringup nav2-bringup ros2-turtlebot4-navigation turtlebot4-navigation
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_85_job_85
+    - stage_89_job_89
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-nav2-minimal-tb4-description ros2-nav2-minimal-tb4-sim ros2-slam-toolbox
+        ros-jazzy-slam-toolbox ros2-nav2-bringup ros-jazzy-nav2-bringup ros2-turtlebot4-navigation
+        ros-jazzy-turtlebot4-navigation
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-nav2-minimal-tb4-description ros2-nav2-minimal-tb4-sim
+          ros2-slam-toolbox ros-jazzy-slam-toolbox ros2-nav2-bringup ros-jazzy-nav2-bringup
+          ros2-turtlebot4-navigation ros-jazzy-turtlebot4-navigation
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_91_job_91:
+    name: ros2-cartographer ros2-cartographer-ros-msgs ros2-cartographer-ros ros2-hls-lfcd-lds-driver
+      ros2-turtlebot3-bringup turtlebot3-bringup ros2-turtlebot3-cartographer ros2-turtlebot3-example
+      ros2-turtlebot3-navigation2 turtlebot3-navigation2 ros2-turtlebot3-teleop ros2-turtlebot3
+      turtlebot3
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_82_job_82
+    - stage_90_job_90
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-cartographer ros2-cartographer-ros-msgs ros2-cartographer-ros
+        ros2-hls-lfcd-lds-driver ros2-turtlebot3-bringup ros-jazzy-turtlebot3-bringup
+        ros2-turtlebot3-cartographer ros2-turtlebot3-example ros2-turtlebot3-navigation2
+        ros-jazzy-turtlebot3-navigation2 ros2-turtlebot3-teleop ros2-turtlebot3 ros-jazzy-turtlebot3
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-cartographer ros2-cartographer-ros-msgs ros2-cartographer-ros
+          ros2-hls-lfcd-lds-driver ros2-turtlebot3-bringup ros-jazzy-turtlebot3-bringup
+          ros2-turtlebot3-cartographer ros2-turtlebot3-example ros2-turtlebot3-navigation2
+          ros-jazzy-turtlebot3-navigation2 ros2-turtlebot3-teleop ros2-turtlebot3
+          ros-jazzy-turtlebot3
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_92_job_92:
+    name: ros2-rosbag2-interfaces ros2-rosbag2-transport rosbag2-transport ros2-rosbag2-py
+      rosbag2-py ros2-swri-console swri-console
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_82_job_82
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-rosbag2-interfaces ros2-rosbag2-transport ros-jazzy-rosbag2-transport
+        ros2-rosbag2-py ros-jazzy-rosbag2-py ros2-swri-console ros-jazzy-swri-console
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-rosbag2-interfaces ros2-rosbag2-transport ros-jazzy-rosbag2-transport
+          ros2-rosbag2-py ros-jazzy-rosbag2-py ros2-swri-console ros-jazzy-swri-console
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_93_job_93:
+    name: ros2-apriltag ros2-apriltag-mit ros2-apriltag-msgs ros2-apriltag-detector
+      ros2-apriltag-detector-mit ros2-apriltag-detector-umich ros2-apriltag-draw ros2-apriltag-tools
+      apriltag-tools
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_92_job_92
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-apriltag ros2-apriltag-mit ros2-apriltag-msgs ros2-apriltag-detector
+        ros2-apriltag-detector-mit ros2-apriltag-detector-umich ros2-apriltag-draw
+        ros2-apriltag-tools ros-jazzy-apriltag-tools
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-apriltag ros2-apriltag-mit ros2-apriltag-msgs ros2-apriltag-detector
+          ros2-apriltag-detector-mit ros2-apriltag-detector-umich ros2-apriltag-draw
+          ros2-apriltag-tools ros-jazzy-apriltag-tools
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_94_job_94:
+    name: ros2-ament-cmake-mypy ros2-ament-pyflakes ros2-ament-cmake-pyflakes ros2-libcamera
+      ros2-camera-ros ros2-apriltag-ros ros2-proto2ros ros2-rosapi-msgs ros2-rosbridge-msgs
+      ros2-rosbridge-test-msgs ros2-rosbridge-library ros2-rosapi ros2-rosbridge-server
+      ros2-rosbridge-suite rosbridge-suite
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_57_job_57
+    - stage_93_job_93
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-ament-cmake-mypy ros2-ament-pyflakes ros2-ament-cmake-pyflakes
+        ros2-libcamera ros2-camera-ros ros2-apriltag-ros ros2-proto2ros ros2-rosapi-msgs
+        ros2-rosbridge-msgs ros2-rosbridge-test-msgs ros2-rosbridge-library ros2-rosapi
+        ros2-rosbridge-server ros2-rosbridge-suite ros-jazzy-rosbridge-suite
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-ament-cmake-mypy ros2-ament-pyflakes ros2-ament-cmake-pyflakes
+          ros2-libcamera ros2-camera-ros ros2-apriltag-ros ros2-proto2ros ros2-rosapi-msgs
+          ros2-rosbridge-msgs ros2-rosbridge-test-msgs ros2-rosbridge-library ros2-rosapi
+          ros2-rosbridge-server ros2-rosbridge-suite ros-jazzy-rosbridge-suite
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_95_job_95:
+    name: ros2-data-tamer-msgs ros2-data-tamer-cpp ros2-plotjuggler ros2-plotjuggler-msgs
+      ros2-plotjuggler-ros plotjuggler-ros
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_92_job_92
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-data-tamer-msgs ros2-data-tamer-cpp ros2-plotjuggler ros2-plotjuggler-msgs
+        ros2-plotjuggler-ros ros-jazzy-plotjuggler-ros
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-data-tamer-msgs ros2-data-tamer-cpp ros2-plotjuggler
+          ros2-plotjuggler-msgs ros2-plotjuggler-ros ros-jazzy-plotjuggler-ros
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_96_job_96:
+    name: ros2-librealsense2 ros2-ros2bag ros2bag ros2-realsense2-camera realsense2-camera
+      ros2-rosbag2-tests rosbag2-tests ros2-rosbag2 rosbag2 ros2-livox-ros-driver2
+      livox-ros-driver2
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_92_job_92
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-librealsense2 ros2-ros2bag ros-jazzy-ros2bag ros2-realsense2-camera
+        ros-jazzy-realsense2-camera ros2-rosbag2-tests ros-jazzy-rosbag2-tests ros2-rosbag2
+        ros-jazzy-rosbag2 ros2-livox-ros-driver2 ros-jazzy-livox-ros-driver2
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-librealsense2 ros2-ros2bag ros-jazzy-ros2bag ros2-realsense2-camera
+          ros-jazzy-realsense2-camera ros2-rosbag2-tests ros-jazzy-rosbag2-tests ros2-rosbag2
+          ros-jazzy-rosbag2 ros2-livox-ros-driver2 ros-jazzy-livox-ros-driver2
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_97_job_97:
+    name: ros2-kinematics-interface ros2-pilz-industrial-motion-planner-testutils
+      pilz-industrial-motion-planner-testutils ros2-tf2-bullet ros2-tf2-eigen-kdl
+      ros2-geometry2 ros2-kinematics-interface-kdl ros2-admittance-controller admittance-controller
+      ros2-moveit-resources-prbt-ikfast-manipulator-plugin moveit-resources-prbt-ikfast-manipulator-plugin
+      ros2-moveit-resources-prbt-moveit-config moveit-resources-prbt-moveit-config
+      ros2-moveit-resources-prbt-pg70-support moveit-resources-prbt-pg70-support ros2-pilz-industrial-motion-planner
+      pilz-industrial-motion-planner ros2-ros-base ros-base
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_96_job_96
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-kinematics-interface ros2-pilz-industrial-motion-planner-testutils
+        ros-jazzy-pilz-industrial-motion-planner-testutils ros2-tf2-bullet ros2-tf2-eigen-kdl
+        ros2-geometry2 ros2-kinematics-interface-kdl ros2-admittance-controller ros-jazzy-admittance-controller
+        ros2-moveit-resources-prbt-ikfast-manipulator-plugin ros-jazzy-moveit-resources-prbt-ikfast-manipulator-plugin
+        ros2-moveit-resources-prbt-moveit-config ros-jazzy-moveit-resources-prbt-moveit-config
+        ros2-moveit-resources-prbt-pg70-support ros-jazzy-moveit-resources-prbt-pg70-support
+        ros2-pilz-industrial-motion-planner ros-jazzy-pilz-industrial-motion-planner
+        ros2-ros-base ros-jazzy-ros-base
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-kinematics-interface ros2-pilz-industrial-motion-planner-testutils
+          ros-jazzy-pilz-industrial-motion-planner-testutils ros2-tf2-bullet ros2-tf2-eigen-kdl
+          ros2-geometry2 ros2-kinematics-interface-kdl ros2-admittance-controller
+          ros-jazzy-admittance-controller ros2-moveit-resources-prbt-ikfast-manipulator-plugin
+          ros-jazzy-moveit-resources-prbt-ikfast-manipulator-plugin ros2-moveit-resources-prbt-moveit-config
+          ros-jazzy-moveit-resources-prbt-moveit-config ros2-moveit-resources-prbt-pg70-support
+          ros-jazzy-moveit-resources-prbt-pg70-support ros2-pilz-industrial-motion-planner
+          ros-jazzy-pilz-industrial-motion-planner ros2-ros-base ros-jazzy-ros-base
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_98_job_98:
+    name: ros2-gz-ros2-control gz-ros2-control ros2-moveit-ros-perception moveit-ros-perception
+      ros2-ros-industrial-cmake-boilerplate ros2-stomp ros2-moveit-planners-stomp
+      moveit-planners-stomp ros2-moveit-planners moveit-planners ros2-clearpath-manipulators
+      clearpath-manipulators ros2-moveit-runtime moveit-runtime ros2-ur-moveit-config
+      ur-moveit-config ros2-ur ur ros2-ur-simulation-gz ur-simulation-gz
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_86_job_86
+    - stage_88_job_88
+    - stage_97_job_97
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-gz-ros2-control ros-jazzy-gz-ros2-control ros2-moveit-ros-perception
+        ros-jazzy-moveit-ros-perception ros2-ros-industrial-cmake-boilerplate ros2-stomp
+        ros2-moveit-planners-stomp ros-jazzy-moveit-planners-stomp ros2-moveit-planners
+        ros-jazzy-moveit-planners ros2-clearpath-manipulators ros-jazzy-clearpath-manipulators
+        ros2-moveit-runtime ros-jazzy-moveit-runtime ros2-ur-moveit-config ros-jazzy-ur-moveit-config
+        ros2-ur ros-jazzy-ur ros2-ur-simulation-gz ros-jazzy-ur-simulation-gz
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-gz-ros2-control ros-jazzy-gz-ros2-control ros2-moveit-ros-perception
+          ros-jazzy-moveit-ros-perception ros2-ros-industrial-cmake-boilerplate ros2-stomp
+          ros2-moveit-planners-stomp ros-jazzy-moveit-planners-stomp ros2-moveit-planners
+          ros-jazzy-moveit-planners ros2-clearpath-manipulators ros-jazzy-clearpath-manipulators
+          ros2-moveit-runtime ros-jazzy-moveit-runtime ros2-ur-moveit-config ros-jazzy-ur-moveit-config
+          ros2-ur ros-jazzy-ur ros2-ur-simulation-gz ros-jazzy-ur-simulation-gz
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_99_job_99:
+    name: ros2-clearpath-config ros2-clearpath-platform-msgs ros2-joy-linux ros2-rosx-introspection
+      ros2-foxglove-bridge foxglove-bridge ros2-clearpath-diagnostics clearpath-diagnostics
+      ros2-twist-mux-msgs ros2-twist-mux ros2-clearpath-control clearpath-control
+      ros2-clearpath-generator-common clearpath-generator-common ros2-zenoh-cpp-vendor
+      ros2-rmw-zenoh-cpp ros2-clearpath-common clearpath-common
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_89_job_89
+    - stage_98_job_98
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-clearpath-config ros2-clearpath-platform-msgs ros2-joy-linux
+        ros2-rosx-introspection ros2-foxglove-bridge ros-jazzy-foxglove-bridge ros2-clearpath-diagnostics
+        ros-jazzy-clearpath-diagnostics ros2-twist-mux-msgs ros2-twist-mux ros2-clearpath-control
+        ros-jazzy-clearpath-control ros2-clearpath-generator-common ros-jazzy-clearpath-generator-common
+        ros2-zenoh-cpp-vendor ros2-rmw-zenoh-cpp ros2-clearpath-common ros-jazzy-clearpath-common
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-clearpath-config ros2-clearpath-platform-msgs ros2-joy-linux
+          ros2-rosx-introspection ros2-foxglove-bridge ros-jazzy-foxglove-bridge ros2-clearpath-diagnostics
+          ros-jazzy-clearpath-diagnostics ros2-twist-mux-msgs ros2-twist-mux ros2-clearpath-control
+          ros-jazzy-clearpath-control ros2-clearpath-generator-common ros-jazzy-clearpath-generator-common
+          ros2-zenoh-cpp-vendor ros2-rmw-zenoh-cpp ros2-clearpath-common ros-jazzy-clearpath-common
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_100_job_100:
+    name: ros2-lbr-description lbr-description ros2-lbr-fri-idl ros2-lbr-fri-ros2
+      lbr-fri-ros2 ros2-lbr-demos-advanced-py lbr-demos-advanced-py
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_98_job_98
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-lbr-description ros-jazzy-lbr-description ros2-lbr-fri-idl
+        ros2-lbr-fri-ros2 ros-jazzy-lbr-fri-ros2 ros2-lbr-demos-advanced-py ros-jazzy-lbr-demos-advanced-py
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-lbr-description ros-jazzy-lbr-description ros2-lbr-fri-idl
+          ros2-lbr-fri-ros2 ros-jazzy-lbr-fri-ros2 ros2-lbr-demos-advanced-py ros-jazzy-lbr-demos-advanced-py
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_101_job_101:
+    name: ros2-lbr-demos-advanced-cpp lbr-demos-advanced-cpp
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_100_job_100
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-lbr-demos-advanced-cpp ros-jazzy-lbr-demos-advanced-cpp
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-lbr-demos-advanced-cpp ros-jazzy-lbr-demos-advanced-cpp
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_102_job_102:
+    name: ros2-moveit-setup-app-plugins moveit-setup-app-plugins ros2-moveit-setup-controllers
+      moveit-setup-controllers ros2-moveit-setup-core-plugins moveit-setup-core-plugins
+      ros2-moveit-setup-assistant moveit-setup-assistant ros2-iiwa14-moveit-config
+      iiwa14-moveit-config ros2-iiwa7-moveit-config iiwa7-moveit-config
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_100_job_100
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-moveit-setup-app-plugins ros-jazzy-moveit-setup-app-plugins
+        ros2-moveit-setup-controllers ros-jazzy-moveit-setup-controllers ros2-moveit-setup-core-plugins
+        ros-jazzy-moveit-setup-core-plugins ros2-moveit-setup-assistant ros-jazzy-moveit-setup-assistant
+        ros2-iiwa14-moveit-config ros-jazzy-iiwa14-moveit-config ros2-iiwa7-moveit-config
+        ros-jazzy-iiwa7-moveit-config
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-moveit-setup-app-plugins ros-jazzy-moveit-setup-app-plugins
+          ros2-moveit-setup-controllers ros-jazzy-moveit-setup-controllers ros2-moveit-setup-core-plugins
+          ros-jazzy-moveit-setup-core-plugins ros2-moveit-setup-assistant ros-jazzy-moveit-setup-assistant
+          ros2-iiwa14-moveit-config ros-jazzy-iiwa14-moveit-config ros2-iiwa7-moveit-config
+          ros-jazzy-iiwa7-moveit-config
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_103_job_103:
+    name: ros2-gpio-controllers gpio-controllers ros2-gps-sensor-broadcaster gps-sensor-broadcaster
+      ros2-parallel-gripper-controller parallel-gripper-controller ros2-picknik-reset-fault-controller
+      ros2-picknik-twist-controller ros2-kortex-description kortex-description ros2-kinova-gen3-7dof-robotiq-2f-85-moveit-config
+      kinova-gen3-7dof-robotiq-2f-85-moveit-config
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_102_job_102
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-gpio-controllers ros-jazzy-gpio-controllers ros2-gps-sensor-broadcaster
+        ros-jazzy-gps-sensor-broadcaster ros2-parallel-gripper-controller ros-jazzy-parallel-gripper-controller
+        ros2-picknik-reset-fault-controller ros2-picknik-twist-controller ros2-kortex-description
+        ros-jazzy-kortex-description ros2-kinova-gen3-7dof-robotiq-2f-85-moveit-config
+        ros-jazzy-kinova-gen3-7dof-robotiq-2f-85-moveit-config
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-gpio-controllers ros-jazzy-gpio-controllers ros2-gps-sensor-broadcaster
+          ros-jazzy-gps-sensor-broadcaster ros2-parallel-gripper-controller ros-jazzy-parallel-gripper-controller
+          ros2-picknik-reset-fault-controller ros2-picknik-twist-controller ros2-kortex-description
+          ros-jazzy-kortex-description ros2-kinova-gen3-7dof-robotiq-2f-85-moveit-config
+          ros-jazzy-kinova-gen3-7dof-robotiq-2f-85-moveit-config
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_104_job_104:
+    name: ros2-med14-moveit-config med14-moveit-config
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_102_job_102
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-med14-moveit-config ros-jazzy-med14-moveit-config
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-med14-moveit-config ros-jazzy-med14-moveit-config
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_105_job_105:
+    name: ros2-med7-moveit-config med7-moveit-config
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_102_job_102
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-med7-moveit-config ros-jazzy-med7-moveit-config
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-med7-moveit-config ros-jazzy-med7-moveit-config
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_106_job_106:
+    name: ros2-mujoco-ros2-control-msgs ros2-mujoco-ros2-control-plugins ros2-ros2controlcli
+      ros2controlcli ros2-gz-ros2-control-demos gz-ros2-control-demos ros2-transmission-interface
+      ros2-mujoco-ros2-control mujoco-ros2-control ros2-mujoco-ros2-control-demos
+      mujoco-ros2-control-demos ros2-ros2-control ros2-control
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_98_job_98
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-mujoco-ros2-control-msgs ros2-mujoco-ros2-control-plugins ros2-ros2controlcli
+        ros-jazzy-ros2controlcli ros2-gz-ros2-control-demos ros-jazzy-gz-ros2-control-demos
+        ros2-transmission-interface ros2-mujoco-ros2-control ros-jazzy-mujoco-ros2-control
+        ros2-mujoco-ros2-control-demos ros-jazzy-mujoco-ros2-control-demos ros2-ros2-control
+        ros-jazzy-ros2-control
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-mujoco-ros2-control-msgs ros2-mujoco-ros2-control-plugins
+          ros2-ros2controlcli ros-jazzy-ros2controlcli ros2-gz-ros2-control-demos
+          ros-jazzy-gz-ros2-control-demos ros2-transmission-interface ros2-mujoco-ros2-control
+          ros-jazzy-mujoco-ros2-control ros2-mujoco-ros2-control-demos ros-jazzy-mujoco-ros2-control-demos
+          ros2-ros2-control ros-jazzy-ros2-control
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_107_job_107:
+    name: ros2-bicycle-steering-controller bicycle-steering-controller ros2-range-sensor-broadcaster
+      range-sensor-broadcaster ros2-ros2-controllers ros2-controllers ros2-irobot-create-control
+      irobot-create-control ros2-irobot-create-description irobot-create-description
+      ros2-lbr-ros2-control lbr-ros2-control
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_103_job_103
+    - stage_106_job_106
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-bicycle-steering-controller ros-jazzy-bicycle-steering-controller
+        ros2-range-sensor-broadcaster ros-jazzy-range-sensor-broadcaster ros2-ros2-controllers
+        ros-jazzy-ros2-controllers ros2-irobot-create-control ros-jazzy-irobot-create-control
+        ros2-irobot-create-description ros-jazzy-irobot-create-description ros2-lbr-ros2-control
+        ros-jazzy-lbr-ros2-control
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-bicycle-steering-controller ros-jazzy-bicycle-steering-controller
+          ros2-range-sensor-broadcaster ros-jazzy-range-sensor-broadcaster ros2-ros2-controllers
+          ros-jazzy-ros2-controllers ros2-irobot-create-control ros-jazzy-irobot-create-control
+          ros2-irobot-create-description ros-jazzy-irobot-create-description ros2-lbr-ros2-control
+          ros-jazzy-lbr-ros2-control
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_108_job_108:
+    name: ros2-lbr-bringup lbr-bringup ros2-lbr-demos-cpp lbr-demos-cpp ros2-lbr-demos-py
+      lbr-demos-py ros2-lbr-fri-ros2-stack lbr-fri-ros2-stack
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_107_job_107
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-lbr-bringup ros-jazzy-lbr-bringup ros2-lbr-demos-cpp ros-jazzy-lbr-demos-cpp
+        ros2-lbr-demos-py ros-jazzy-lbr-demos-py ros2-lbr-fri-ros2-stack ros-jazzy-lbr-fri-ros2-stack
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-lbr-bringup ros-jazzy-lbr-bringup ros2-lbr-demos-cpp
+          ros-jazzy-lbr-demos-cpp ros2-lbr-demos-py ros-jazzy-lbr-demos-py ros2-lbr-fri-ros2-stack
+          ros-jazzy-lbr-fri-ros2-stack
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_109_job_109:
+    name: ros2-py-binding-tools ros2-moveit-task-constructor-core moveit-task-constructor-core
+      ros2-moveit-task-constructor-capabilities moveit-task-constructor-capabilities
+      ros2-moveit-task-constructor-visualization moveit-task-constructor-visualization
+      ros2-moveit-task-constructor-demo moveit-task-constructor-demo
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_87_job_87
+    - stage_98_job_98
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-py-binding-tools ros2-moveit-task-constructor-core ros-jazzy-moveit-task-constructor-core
+        ros2-moveit-task-constructor-capabilities ros-jazzy-moveit-task-constructor-capabilities
+        ros2-moveit-task-constructor-visualization ros-jazzy-moveit-task-constructor-visualization
+        ros2-moveit-task-constructor-demo ros-jazzy-moveit-task-constructor-demo
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-py-binding-tools ros2-moveit-task-constructor-core ros-jazzy-moveit-task-constructor-core
+          ros2-moveit-task-constructor-capabilities ros-jazzy-moveit-task-constructor-capabilities
+          ros2-moveit-task-constructor-visualization ros-jazzy-moveit-task-constructor-visualization
+          ros2-moveit-task-constructor-demo ros-jazzy-moveit-task-constructor-demo
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_110_job_110:
+    name: ros2-ament-cmake-catch2 ros2-graph-msgs ros2-moveit-ros moveit-ros ros2-moveit
+      moveit ros2-moveit-visual-tools moveit-visual-tools ros2-rmf-utils ros2-moveit-ros-trajectory-cache
+      moveit-ros-trajectory-cache ros2-moveit2-tutorials moveit2-tutorials
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_103_job_103
+    - stage_106_job_106
+    - stage_109_job_109
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-ament-cmake-catch2 ros2-graph-msgs ros2-moveit-ros ros-jazzy-moveit-ros
+        ros2-moveit ros-jazzy-moveit ros2-moveit-visual-tools ros-jazzy-moveit-visual-tools
+        ros2-rmf-utils ros2-moveit-ros-trajectory-cache ros-jazzy-moveit-ros-trajectory-cache
+        ros2-moveit2-tutorials ros-jazzy-moveit2-tutorials
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-ament-cmake-catch2 ros2-graph-msgs ros2-moveit-ros ros-jazzy-moveit-ros
+          ros2-moveit ros-jazzy-moveit ros2-moveit-visual-tools ros-jazzy-moveit-visual-tools
+          ros2-rmf-utils ros2-moveit-ros-trajectory-cache ros-jazzy-moveit-ros-trajectory-cache
+          ros2-moveit2-tutorials ros-jazzy-moveit2-tutorials
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_111_job_111:
+    name: ros2-ros2-medkit-fault-manager ros2-medkit-fault-manager ros2-ros2-medkit-fault-reporter
+      ros2-medkit-fault-reporter ros2-ros2-medkit-action-status-bridge ros2-medkit-action-status-bridge
+      ros2-ros2-medkit-diagnostic-bridge ros2-medkit-diagnostic-bridge ros2-ros2-medkit-log-bridge
+      ros2-medkit-log-bridge ros2-ros2-medkit-gateway ros2-medkit-gateway ros2-ros2-medkit-linux-introspection
+      ros2-medkit-linux-introspection ros2-ros2-medkit-sovd-service-interface ros2-medkit-sovd-service-interface
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_92_job_92
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-ros2-medkit-fault-manager ros-jazzy-ros2-medkit-fault-manager
+        ros2-ros2-medkit-fault-reporter ros-jazzy-ros2-medkit-fault-reporter ros2-ros2-medkit-action-status-bridge
+        ros-jazzy-ros2-medkit-action-status-bridge ros2-ros2-medkit-diagnostic-bridge
+        ros-jazzy-ros2-medkit-diagnostic-bridge ros2-ros2-medkit-log-bridge ros-jazzy-ros2-medkit-log-bridge
+        ros2-ros2-medkit-gateway ros-jazzy-ros2-medkit-gateway ros2-ros2-medkit-linux-introspection
+        ros-jazzy-ros2-medkit-linux-introspection ros2-ros2-medkit-sovd-service-interface
+        ros-jazzy-ros2-medkit-sovd-service-interface
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-ros2-medkit-fault-manager ros-jazzy-ros2-medkit-fault-manager
+          ros2-ros2-medkit-fault-reporter ros-jazzy-ros2-medkit-fault-reporter ros2-ros2-medkit-action-status-bridge
+          ros-jazzy-ros2-medkit-action-status-bridge ros2-ros2-medkit-diagnostic-bridge
+          ros-jazzy-ros2-medkit-diagnostic-bridge ros2-ros2-medkit-log-bridge ros-jazzy-ros2-medkit-log-bridge
+          ros2-ros2-medkit-gateway ros-jazzy-ros2-medkit-gateway ros2-ros2-medkit-linux-introspection
+          ros-jazzy-ros2-medkit-linux-introspection ros2-ros2-medkit-sovd-service-interface
+          ros-jazzy-ros2-medkit-sovd-service-interface
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_112_job_112:
+    name: ros2-ros2-medkit-beacon-common ros2-medkit-beacon-common ros2-ros2-medkit-graph-provider
+      ros2-medkit-graph-provider ros2-ros2-medkit-param-beacon ros2-medkit-param-beacon
+      ros2-ros2-medkit-topic-beacon ros2-medkit-topic-beacon ros2-ros2-medkit-integration-tests
+      ros2-medkit-integration-tests
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_111_job_111
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-ros2-medkit-beacon-common ros-jazzy-ros2-medkit-beacon-common
+        ros2-ros2-medkit-graph-provider ros-jazzy-ros2-medkit-graph-provider ros2-ros2-medkit-param-beacon
+        ros-jazzy-ros2-medkit-param-beacon ros2-ros2-medkit-topic-beacon ros-jazzy-ros2-medkit-topic-beacon
+        ros2-ros2-medkit-integration-tests ros-jazzy-ros2-medkit-integration-tests
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-ros2-medkit-beacon-common ros-jazzy-ros2-medkit-beacon-common
+          ros2-ros2-medkit-graph-provider ros-jazzy-ros2-medkit-graph-provider ros2-ros2-medkit-param-beacon
+          ros-jazzy-ros2-medkit-param-beacon ros2-ros2-medkit-topic-beacon ros-jazzy-ros2-medkit-topic-beacon
+          ros2-ros2-medkit-integration-tests ros-jazzy-ros2-medkit-integration-tests
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_113_job_113:
+    name: ros2-rqt-bag rqt-bag ros2-rqt-bag-plugins rqt-bag-plugins ros2-rqt-msg ros2-rqt-action
+      ros2-rqt-publisher ros2-rqt-srv ros2-rqt-common-plugins rqt-common-plugins
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_77_job_77
+    - stage_96_job_96
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-rqt-bag ros-jazzy-rqt-bag ros2-rqt-bag-plugins ros-jazzy-rqt-bag-plugins
+        ros2-rqt-msg ros2-rqt-action ros2-rqt-publisher ros2-rqt-srv ros2-rqt-common-plugins
+        ros-jazzy-rqt-common-plugins
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-rqt-bag ros-jazzy-rqt-bag ros2-rqt-bag-plugins ros-jazzy-rqt-bag-plugins
+          ros2-rqt-msg ros2-rqt-action ros2-rqt-publisher ros2-rqt-srv ros2-rqt-common-plugins
+          ros-jazzy-rqt-common-plugins
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_114_job_114:
+    name: ros2-examples-rclpy-executors ros2-examples-rclpy-minimal-action-client
+      ros2-examples-rclpy-minimal-action-server ros2-examples-rclpy-minimal-client
+      ros2-examples-rclpy-minimal-publisher ros2-examples-rclpy-minimal-service ros2-examples-rclpy-minimal-subscriber
+      ros2-image-common ros2-laser-filters ros2-perception perception ros2-quality-of-service-demo-py
+      ros2-simulation simulation ros2-teleop-twist-keyboard ros2-desktop desktop ros2-desktop-full
+      desktop-full
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_59_job_59
+    - stage_62_job_62
+    - stage_63_job_63
+    - stage_64_job_64
+    - stage_85_job_85
+    - stage_97_job_97
+    - stage_113_job_113
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-examples-rclpy-executors ros2-examples-rclpy-minimal-action-client
+        ros2-examples-rclpy-minimal-action-server ros2-examples-rclpy-minimal-client
+        ros2-examples-rclpy-minimal-publisher ros2-examples-rclpy-minimal-service
+        ros2-examples-rclpy-minimal-subscriber ros2-image-common ros2-laser-filters
+        ros2-perception ros-jazzy-perception ros2-quality-of-service-demo-py ros2-simulation
+        ros-jazzy-simulation ros2-teleop-twist-keyboard ros2-desktop ros-jazzy-desktop
+        ros2-desktop-full ros-jazzy-desktop-full
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-examples-rclpy-executors ros2-examples-rclpy-minimal-action-client
+          ros2-examples-rclpy-minimal-action-server ros2-examples-rclpy-minimal-client
+          ros2-examples-rclpy-minimal-publisher ros2-examples-rclpy-minimal-service
+          ros2-examples-rclpy-minimal-subscriber ros2-image-common ros2-laser-filters
+          ros2-perception ros-jazzy-perception ros2-quality-of-service-demo-py ros2-simulation
+          ros-jazzy-simulation ros2-teleop-twist-keyboard ros2-desktop ros-jazzy-desktop
+          ros2-desktop-full ros-jazzy-desktop-full
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_115_job_115:
+    name: ros2-rqt-robot-monitor ros2-turtlebot4-description turtlebot4-description
+      ros2-turtlebot4-bringup turtlebot4-bringup ros2-turtlebot4-robot turtlebot4-robot
+      ros2-turtlebot4-viz turtlebot4-viz ros2-turtlebot4-desktop turtlebot4-desktop
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_57_job_57
+    - stage_99_job_99
+    - stage_107_job_107
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-rqt-robot-monitor ros2-turtlebot4-description ros-jazzy-turtlebot4-description
+        ros2-turtlebot4-bringup ros-jazzy-turtlebot4-bringup ros2-turtlebot4-robot
+        ros-jazzy-turtlebot4-robot ros2-turtlebot4-viz ros-jazzy-turtlebot4-viz ros2-turtlebot4-desktop
+        ros-jazzy-turtlebot4-desktop
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-rqt-robot-monitor ros2-turtlebot4-description ros-jazzy-turtlebot4-description
+          ros2-turtlebot4-bringup ros-jazzy-turtlebot4-bringup ros2-turtlebot4-robot
+          ros-jazzy-turtlebot4-robot ros2-turtlebot4-viz ros-jazzy-turtlebot4-viz
+          ros2-turtlebot4-desktop ros-jazzy-turtlebot4-desktop
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_116_job_116:
+    name: ros2-irobot-create-toolbox ros2-irobot-create-gz-toolbox ros2-irobot-create-nodes
+      ros2-irobot-create-common-bringup irobot-create-common-bringup ros2-irobot-create-gz-bringup
+      irobot-create-gz-bringup ros2-irobot-create-gz-sim irobot-create-gz-sim ros2-turtlebot4-gz-gui-plugins
+      ros2-turtlebot4-gz-bringup turtlebot4-gz-bringup ros2-turtlebot4-simulator turtlebot4-simulator
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_77_job_77
+    - stage_90_job_90
+    - stage_115_job_115
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-irobot-create-toolbox ros2-irobot-create-gz-toolbox ros2-irobot-create-nodes
+        ros2-irobot-create-common-bringup ros-jazzy-irobot-create-common-bringup ros2-irobot-create-gz-bringup
+        ros-jazzy-irobot-create-gz-bringup ros2-irobot-create-gz-sim ros-jazzy-irobot-create-gz-sim
+        ros2-turtlebot4-gz-gui-plugins ros2-turtlebot4-gz-bringup ros-jazzy-turtlebot4-gz-bringup
+        ros2-turtlebot4-simulator ros-jazzy-turtlebot4-simulator
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-irobot-create-toolbox ros2-irobot-create-gz-toolbox
+          ros2-irobot-create-nodes ros2-irobot-create-common-bringup ros-jazzy-irobot-create-common-bringup
+          ros2-irobot-create-gz-bringup ros-jazzy-irobot-create-gz-bringup ros2-irobot-create-gz-sim
+          ros-jazzy-irobot-create-gz-sim ros2-turtlebot4-gz-gui-plugins ros2-turtlebot4-gz-bringup
+          ros-jazzy-turtlebot4-gz-bringup ros2-turtlebot4-simulator ros-jazzy-turtlebot4-simulator
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_117_job_117:
+    name: ros2-udp-msgs ros2-io-context ros2-serial-driver ros2-udp-driver
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_27_job_27
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-udp-msgs ros2-io-context ros2-serial-driver ros2-udp-driver
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-udp-msgs ros2-io-context ros2-serial-driver ros2-udp-driver
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_118_job_118:
+    name: ros2-velodyne-msgs ros2-velodyne-driver ros2-velodyne-pointcloud ros2-velodyne
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_38_job_38
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-velodyne-msgs ros2-velodyne-driver ros2-velodyne-pointcloud
+        ros2-velodyne
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-velodyne-msgs ros2-velodyne-driver ros2-velodyne-pointcloud
+          ros2-velodyne
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+  stage_119_job_119:
+    name: ros2-yasmin ros2-yasmin-msgs ros2-yasmin-pcl ros2-yasmin-ros ros2-yasmin-viewer
+      ros2-yasmin-factory ros2-yasmin-demos yasmin-demos ros2-yasmin-plugins-manager
+      ros2-yasmin-editor yasmin-editor ros2-yasmin-cli yasmin-cli
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    needs:
+    - stage_58_job_58
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+    - name: Setup pixi
+      uses: prefix-dev/setup-pixi@v0.10.2
+      with:
+        pixi-version: v0.78.0
+        cache: 'true'
+        log-level: v
+        frozen: 'true'
+    - name: Build ros2-yasmin ros2-yasmin-msgs ros2-yasmin-pcl ros2-yasmin-ros ros2-yasmin-viewer
+        ros2-yasmin-factory ros2-yasmin-demos ros-jazzy-yasmin-demos ros2-yasmin-plugins-manager
+        ros2-yasmin-editor ros-jazzy-yasmin-editor ros2-yasmin-cli ros-jazzy-yasmin-cli
+      env:
+        ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_API_TOKEN }}
+        CURRENT_RECIPES: ros2-yasmin ros2-yasmin-msgs ros2-yasmin-pcl ros2-yasmin-ros
+          ros2-yasmin-viewer ros2-yasmin-factory ros2-yasmin-demos ros-jazzy-yasmin-demos
+          ros2-yasmin-plugins-manager ros2-yasmin-editor ros-jazzy-yasmin-editor ros2-yasmin-cli
+          ros-jazzy-yasmin-cli
+        BUILD_TARGET: ''
+      run: |
+        export CI=azure
+        export GIT_BRANCH=$BUILD_SOURCEBRANCHNAME
+        export FEEDSTOCK_NAME=$(basename ${BUILD_REPOSITORY_NAME})
+        .scripts/build_unix.sh --target $BUILD_TARGET
+    permissions:
+      id-token: write
+      attestations: write
+name: build_linux64
+on:
+  push:
+    branches:
+    - experiment/dependency-aware-batching-build
